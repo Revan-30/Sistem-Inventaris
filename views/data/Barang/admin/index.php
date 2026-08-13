@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../../../../config/Database.php';
 require_once __DIR__ . '/../../../../config/Helper.php';
 require_once __DIR__ . '/../../../../models/Barang.php';
+require_once __DIR__ . '/../../../../models/KategoriBarang.php';
+require_once __DIR__ . '/../../../../models/Lokasi.php';
 
 authAdmin();
 
@@ -10,6 +12,12 @@ $conn = $db->connect();
 
 $barang = new Barang($conn);
 $data = $barang->getAll();
+
+$kategori = new KategoriBarang($conn);
+$data_kategori = $kategori->getAll()->fetch_all(MYSQLI_ASSOC);
+
+$lokasi = new Lokasi($conn);
+$data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
 
 ?>
 
@@ -20,6 +28,7 @@ $data = $barang->getAll();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Data Barang</title>
+    <script src="<?= BASE_URL ?>js/barang.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
 
@@ -61,8 +70,10 @@ $data = $barang->getAll();
                     <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Kode Barang</th>
                     <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Nama Barang</th>
                     <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Kategori</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Lokasi</th>
                     <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Stok</th>
                     <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Kondisi</th>
+                    <th class="px-4 py-3 text-left text-sm font-semibold text-gray-700">Dokumen</th>
                     <th class="px-4 py-3 text-center text-sm font-semibold text-gray-700">Aksi</th>
                 </tr>
             </thead>
@@ -75,9 +86,21 @@ $data = $barang->getAll();
                     <td class="px-4 py-3 text-gray-700"><?= $no++ ?></td>
                     <td class="px-4 py-3 font-medium text-gray-700"><?= htmlspecialchars($row['kode_barang'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
                     <td class="px-4 py-3 text-gray-700"><?= htmlspecialchars($row['nama_barang'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
-                    <td class="px-4 py-3 text-gray-700"><?= htmlspecialchars($row['kategori'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                    <td class="px-4 py-3 text-gray-700"><?= htmlspecialchars($row['nama_kategori'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                    <td class="px-4 py-3 text-gray-700"><?= htmlspecialchars($row['nama_lokasi'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
                     <td class="px-4 py-3 text-gray-700"><?= htmlspecialchars($row['stok'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
                     <td class="px-4 py-3 text-gray-700"><?= htmlspecialchars($row['kondisi'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                    <td class="px-4 py-3">
+                        <?php if (!empty($row['dokumen'])) : ?>
+                            <a href="<?= BASE_URL ?>uploads/barang/<?= urlencode($row['dokumen']) ?>"
+                              target="_blank"
+                              class="rounded-lg bg-blue-600 px-3 py-1 text-xs font-medium text-white hover:bg-blue-700">
+                                Lihat
+                            </a>
+                        <?php else : ?>
+                            <span class="text-sm text-gray-400">-</span>
+                        <?php endif; ?>
+                    </td>
                     <td class="px-4 py-3">
                         <div class="flex justify-center gap-2">
 
@@ -86,9 +109,11 @@ $data = $barang->getAll();
                                     '<?= htmlspecialchars($row['id'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
                                     '<?= htmlspecialchars($row['kode_barang'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
                                     '<?= htmlspecialchars($row['nama_barang'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
-                                    '<?= htmlspecialchars($row['kategori'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
+                                    '<?= htmlspecialchars($row['kategori_id'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
+                                    '<?= htmlspecialchars($row['lokasi_id'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
                                     '<?= htmlspecialchars($row['stok'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
-                                    '<?= htmlspecialchars($row['kondisi'] ?? '', ENT_QUOTES, 'UTF-8') ?>'
+                                    '<?= htmlspecialchars($row['kondisi'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
+                                    '<?= htmlspecialchars($row['dokumen'] ?? '', ENT_QUOTES, 'UTF-8') ?>'
                                 )"
                                 class="rounded-lg bg-yellow-500 px-3 py-2 text-xs font-medium text-black transition hover:bg-yellow-600">
                                 Edit
@@ -125,7 +150,10 @@ $data = $barang->getAll();
             <h2 class="text-xl font-bold">Tambah Data Barang</h2>
         </div>
 
-        <form action="<?= BASE_URL ?>proses/barang/tambah.php" method="POST" class="space-y-4">
+        <form action="<?= BASE_URL ?>proses/barang/tambah.php" 
+              method="POST" 
+              enctype="multipart/form-data" 
+              class="space-y-4">
 
             <input type="text" name="kode_barang" placeholder="Kode Barang"
                    class="w-full rounded-lg border px-3 py-2" required>
@@ -133,8 +161,23 @@ $data = $barang->getAll();
             <input type="text" name="nama_barang" placeholder="Nama Barang"
                    class="w-full rounded-lg border px-3 py-2" required>
 
-            <input type="text" name="kategori" placeholder="Kategori"
-                   class="w-full rounded-lg border px-3 py-2" required>
+            <select name="kategori_id" class="w-full rounded-lg border px-3 py-2" required>
+                <option value="">Pilih Kategori</option>
+                <?php foreach ($data_kategori as $k) : ?>
+                    <option value="<?= $k['id'] ?>">
+                        <?= htmlspecialchars($k['nama_kategori']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <select name="lokasi_id" class="w-full rounded-lg border px-3 py-2" required>
+                <option value="">Pilih Lokasi</option>
+                <?php foreach ($data_lokasi as $k) : ?>
+                    <option value="<?= $k['id'] ?>">
+                        <?= htmlspecialchars($k['nama_lokasi']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
 
             <input type="number" name="stok" placeholder="Stok" min="0"
                    class="w-full rounded-lg border px-3 py-2" required>
@@ -146,6 +189,20 @@ $data = $barang->getAll();
                 <option value="Rusak Ringan">Rusak Ringan</option>
                 <option value="Rusak Berat">Rusak Berat</option>
             </select>
+
+            <label class="mb-1 block text-sm font-medium text-gray-700">
+                Dokumen / Foto Barang
+            </label>
+
+            <input
+                type="file"
+                name="dokumen"
+                accept=".pdf,.jpg,.jpeg,.png"
+                class="w-full rounded-lg border px-3 py-2">
+
+            <p class="mt-1 text-xs text-gray-500">
+                Format: PDF, JPG, JPEG, PNG (maks. 2 MB)
+            </p>
 
             <div class="flex justify-end gap-2">
                 <button type="button" onclick="closeTambahModal()"
@@ -175,7 +232,10 @@ $data = $barang->getAll();
             <h2 class="text-xl font-bold">Edit Data Barang</h2>
         </div>
 
-        <form action="<?= BASE_URL ?>proses/barang/edit.php" method="POST" class="space-y-4">
+        <form action="<?= BASE_URL ?>proses/barang/edit.php" 
+              method="POST" 
+              enctype="multipart/form-data"
+              class="space-y-4">
 
             <input type="hidden" name="id" id="edit_id">
 
@@ -185,8 +245,25 @@ $data = $barang->getAll();
             <input type="text" name="nama_barang" id="edit_nama"
                    class="w-full rounded-lg border px-3 py-2" required>
 
-            <input type="text" name="kategori" id="edit_kategori"
-                   class="w-full rounded-lg border px-3 py-2" required>
+            <select name="kategori_id" id="edit_kategori"
+                    class="w-full rounded-lg border px-3 py-2" required>
+                <option value="">Pilih Kategori</option>
+                <?php foreach ($data_kategori as $k) : ?>
+                    <option value="<?= $k['id'] ?>">
+                        <?= htmlspecialchars($k['nama_kategori']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <select name="lokasi_id" id="edit_lokasi"
+                    class="w-full rounded-lg border px-3 py-2" required>
+                <option value="">Pilih Lokasi</option>
+                <?php foreach ($data_lokasi as $k) : ?>
+                    <option value="<?= $k['id'] ?>">
+                        <?= htmlspecialchars($k['nama_lokasi']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
 
             <input type="number" name="stok" id="edit_stok" min="0"
                    class="w-full rounded-lg border px-3 py-2" required>
@@ -197,6 +274,21 @@ $data = $barang->getAll();
                 <option value="Rusak Ringan">Rusak Ringan</option>
                 <option value="Rusak Berat">Rusak Berat</option>
             </select>
+
+            <label class="mb-1 block text-sm font-medium text-gray-700">
+                Ganti Dokumen / Foto Barang
+            </label>
+
+            <input
+                type="file"
+                name="dokumen"
+                id="edit_dokumen"
+                accept=".pdf,.jpg,.jpeg,.png"
+                class="w-full rounded-lg border px-3 py-2">
+
+            <p class="mt-1 text-xs text-gray-500">
+                Kosongkan jika tidak ingin mengganti file.
+            </p>
 
             <div class="flex justify-end gap-2">
                 <button type="button" onclick="closeEditModal()"
@@ -215,75 +307,6 @@ $data = $barang->getAll();
     </div>
 </div>
 
-<script>
-const flash = document.getElementById('flash-message');
-
-if (flash) {
-    setTimeout(() => {
-        flash.classList.add('opacity-0', 'translate-x-5');
-        setTimeout(() => flash.remove(), 500);
-    }, 3000);
-}
-
-function openTambahModal() {
-    const modal = document.getElementById('tambahModal');
-    const content = document.getElementById('tambahModalContent');
-
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-
-    setTimeout(() => {
-        content.classList.remove('scale-95', 'opacity-0');
-        content.classList.add('scale-100', 'opacity-100');
-    }, 10);
-}
-
-function closeTambahModal() {
-    const modal = document.getElementById('tambahModal');
-    const content = document.getElementById('tambahModalContent');
-
-    content.classList.remove('scale-100', 'opacity-100');
-    content.classList.add('scale-95', 'opacity-0');
-
-    setTimeout(() => {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    }, 300);
-}
-
-function openEditModal(id, kode, nama, kategori, stok, kondisi) {
-    document.getElementById('edit_id').value = id;
-    document.getElementById('edit_kode').value = kode;
-    document.getElementById('edit_nama').value = nama;
-    document.getElementById('edit_kategori').value = kategori;
-    document.getElementById('edit_stok').value = stok;
-    document.getElementById('edit_kondisi').value = kondisi;
-
-    const modal = document.getElementById('editModal');
-    const content = document.getElementById('editModalContent');
-
-    modal.classList.remove('hidden');
-    modal.classList.add('flex');
-
-    setTimeout(() => {
-        content.classList.remove('scale-95', 'opacity-0');
-        content.classList.add('scale-100', 'opacity-100');
-    }, 10);
-}
-
-function closeEditModal() {
-    const modal = document.getElementById('editModal');
-    const content = document.getElementById('editModalContent');
-
-    content.classList.remove('scale-100', 'opacity-100');
-    content.classList.add('scale-95', 'opacity-0');
-
-    setTimeout(() => {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-    }, 300);
-}
-</script>
 
 </body>
 </html>

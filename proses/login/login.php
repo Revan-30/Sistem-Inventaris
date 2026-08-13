@@ -8,7 +8,7 @@ require_once __DIR__ . '/../../models/Auth.php';
 $database = new Database();
 $conn = $database->connect();
 
-$username = $_POST['username'];
+$username = trim($_POST['username']);
 $password = $_POST['password'];
 
 $user = new User($conn);

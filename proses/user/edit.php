@@ -15,9 +15,9 @@ $activity = new ActivityLog($conn);
 
 // Ambil data dari form
 $id       = (int) $_POST['id'];
-$username = $_POST['username'];
+$username = trim($_POST['username']);
 $password = $_POST['password'];
-$role     = $_POST['role'];
+$role     = trim($_POST['role']);
 
 // Update user
 if ($user->update($id, $username, $password, $role)) {

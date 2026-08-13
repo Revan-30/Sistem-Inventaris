@@ -14,9 +14,9 @@ $user = new User($conn);
 $activity = new ActivityLog($conn);
 
 // Ambil data dari form
-$username = $_POST['username'];
+$username =trim($_POST['username']);
 $password = $_POST['password'];
-$role     = $_POST['role'];
+$role     = trim($_POST['role']);
 
 // Simpan user
 if ($user->create($username, $password, $role)) {

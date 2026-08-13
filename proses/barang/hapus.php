@@ -1,6 +1,5 @@
 <?php
 
-// Memanggil file yang dibutuhkan
 require_once __DIR__ . '/../../config/Database.php';
 require_once __DIR__ . '/../../config/Helper.php';
 require_once __DIR__ . '/../../models/Barang.php';
@@ -8,31 +7,35 @@ require_once __DIR__ . '/../../models/ActivityLog.php';
 
 authAdmin();
 
-// Membuat koneksi database dan objek model
 $database = new Database();
-$conn     = $database->connect();
+$conn = $database->connect();
 
-$barang     = new Barang($conn);
-$activity   = new ActivityLog($conn);
+$barang = new Barang($conn);
+$activity = new ActivityLog($conn);
 
-
-// Mengambil ID barang dari URL
+// Ambil ID dari URL
 $id = (int) $_GET['id'];
 
-
-// Mengambil data barang terlebih dahulu
-// Tujuannya untuk mendapatkan nama barang sebelum data dihapus
+// Ambil data barang terlebih dahulu
 $dataBarang = $barang->getById($id);
 
 if ($dataBarang) {
 
     $nama_barang = $dataBarang['nama_barang'];
 
+    // Hapus file dokumen jika ada
+    if (!empty($dataBarang['dokumen'])) {
+        $filePath = __DIR__ . '/../../uploads/barang/' . $dataBarang['dokumen'];
 
-    // Menghapus data barang berdasarkan ID
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+    }
+
+    // Hapus barang
     if ($barang->delete($id)) {
 
-        // Mencatat aktivitas penghapusan barang ke Activity Log
+        // Catat aktivitas
         $activity->create(
             $_SESSION['id'],
             $_SESSION['username'],
@@ -43,7 +46,6 @@ if ($dataBarang) {
     }
 }
 
-
-// Mengembalikan user ke halaman Data Barang setelah proses selesai
+// Redirect kembali ke halaman barang
 header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
 exit;

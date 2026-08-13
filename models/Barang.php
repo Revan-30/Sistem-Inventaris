@@ -9,15 +9,37 @@ class Barang {
 
     // READ
     public function getAll() {
-        $query = "SELECT * FROM {$this->table} ORDER BY id DESC";
+        $query = "SELECT
+                    barang.*,
+                    kategori_barang.nama_kategori,
+                    lokasi.nama_lokasi,
+                    users.username AS dibuat_oleh
+                  FROM barang
+                  JOIN kategori_barang
+                       ON barang.kategori_id = kategori_barang.id
+                  JOIN lokasi
+                       ON barang.lokasi_id = lokasi.id
+                  JOIN users
+                       ON barang.created_by = users.id
+                  ORDER BY barang.id DESC";
+
         return $this->conn->query($query);
     }
 
     // CREATE
-    public function create($kode_barang, $nama_barang, $kategori, $stok, $kondisi) {
+    public function create(
+        $kode_barang, 
+        $nama_barang, 
+        $kategori_id, 
+        $lokasi_id, 
+        $stok, 
+        $kondisi, 
+        $dokumen, 
+        $created_by) {
+
         $query = "INSERT INTO {$this->table}
-                  (kode_barang, nama_barang, kategori, stok, kondisi)
-                  VALUES (?, ?, ?, ?, ?)";
+                  (kode_barang, nama_barang, kategori_id, lokasi_id, stok, kondisi, dokumen, created_by)
+                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -26,12 +48,15 @@ class Barang {
         }
 
         $stmt->bind_param(
-            "sssis",
+            "ssiiissi",
             $kode_barang,
             $nama_barang,
-            $kategori,
+            $kategori_id,
+            $lokasi_id,
             $stok,
-            $kondisi
+            $kondisi,
+            $dokumen,
+            $created_by
         );
 
         $success = $stmt->execute();
@@ -62,9 +87,24 @@ class Barang {
     }
 
     // UPDATE
-    public function update($id, $kode_barang, $nama_barang, $kategori, $stok, $kondisi) {
+    public function update(
+        $id, 
+        $kode_barang, 
+        $nama_barang, 
+        $kategori_id, 
+        $lokasi_id, 
+        $stok, 
+        $kondisi, 
+        $dokumen) {
+
         $query = "UPDATE {$this->table}
-                  SET kode_barang = ?, nama_barang = ?, kategori = ?, stok = ?, kondisi = ?
+                  SET kode_barang = ?, 
+                     nama_barang = ?, 
+                     kategori_id = ?, 
+                     lokasi_id = ?, 
+                     stok = ?, 
+                     kondisi = ?, 
+                     dokumen = ?
                   WHERE id = ?";
 
         $stmt = $this->conn->prepare($query);
@@ -74,12 +114,14 @@ class Barang {
         }
 
         $stmt->bind_param(
-            "sssisi",
+            "ssiiissi",
             $kode_barang,
             $nama_barang,
-            $kategori,
+            $kategori_id,
+            $lokasi_id,
             $stok,
             $kondisi,
+            $dokumen,
             $id
         );
 
