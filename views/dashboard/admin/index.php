@@ -49,14 +49,14 @@ $flash = getFlash();
 </head>
 <body class="bg-gray-100">
 
-<div class="flex min-h-screen">
+<div class="flex h-screen overflow-hidden">
 
     <?php require_once __DIR__ . '/../../layout/sidebar.php';?>
     
-    <div class="flex-1 flex flex-col">
+    <div class="flex min-w-0 flex-1 flex-col overflow-hidden">
     
     <!-- Content Home -->
-    <main class="flex-1 bg-gray-100 px-8 pt-6 pb-6">
+    <main class="flex-1 overflow-y-auto bg-gray-100 px-8 pt-6 pb-6">
 
     <div class="space-y-8">
 
