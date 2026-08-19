@@ -39,6 +39,9 @@ $data = $kategori->getAll();
     <!-- Area Konten -->
     <div class="flex min-w-0 flex-1 flex-col">
 
+    <!-- Topbar -->
+    <?php require_once __DIR__ . '/../../../layout/topbar.php'; ?>
+
         <!-- Konten Data Kategori -->
         <main class="flex-1 overflow-y-auto bg-gray-100 p-8">
 
@@ -52,15 +55,12 @@ $data = $kategori->getAll();
                     </div>
 
                     <div class="flex items-center gap-3">
-                        <a href="<?= BASE_URL ?>views/dashboard/admin/index.php"
-                           class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100">
-                            ← Kembali
-                        </a>
 
                         <button onclick="openTambahModal()"
                                 class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700">
                             + Tambah Kategori
                         </button>
+                        
                     </div>
                 </div>
 

@@ -11,7 +11,7 @@
     <div class="flex items-center gap-4">
         <span>Version 1.0</span>
         <span class="hidden md:inline">•</span>
-        <span>&copy; <?= date('Y') ?> Revan Hardy Wardiansyah</span>
+        <span>&copy; <?= date('Y') ?> Peraktik Kerja Lapangan</span>
     </div>
 
 </div>

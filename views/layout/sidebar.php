@@ -71,10 +71,7 @@
                 </div>
 
                 <div class="whitespace-nowrap">
-                    <p class="text-sm font-bold tracking-wide text-gray-800">INVENTARIS</p>
-                    <p class="text-[10px] font-medium uppercase tracking-wider text-gray-400">
-                        Dashboard
-                    </p>
+                    <p class="text-sm font-bold tracking-wide text-gray-800">INVENTARIS</p> 
                 </div>
 
             </div>
@@ -335,8 +332,8 @@
                     :class="[
                         sidebarOpen ? 'justify-between' : 'justify-center',
                         isActivityActive() || activityOpen
-                            ? 'bg-purple-50 text-purple-600'
-                            : 'text-gray-600 hover:bg-purple-50 hover:text-purple-600'
+                            ? 'bg-blue-50 text-blue-600'
+                            : 'text-gray-600 hover:bg-blue-50 hover:text-blue-600'
                     ]"
                 >
                     <div class="flex items-center gap-3">
@@ -346,8 +343,8 @@
                             class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-all duration-200"
                             :class="
                                 isActivityActive() || activityOpen
-                                    ? 'bg-purple-100 text-purple-600'
-                                    : 'bg-gray-100 text-gray-500 group-hover:bg-purple-100 group-hover:text-purple-600'
+                                    ? 'bg-blue-100 text-blue-600'
+                                    : 'bg-gray-100 text-gray-500 group-hover:bg-blue-100 group-hover:text-blue-600'
                             "
                         >
                             <svg
@@ -377,7 +374,7 @@
                         x-transition
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-4 w-4 shrink-0 transition-transform duration-300"
-                        :class="activityOpen ? 'rotate-180 text-purple-600' : 'text-gray-400'"
+                        :class="activityOpen ? 'rotate-180 text-blue-600' : 'text-gray-400'"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -411,16 +408,16 @@
                                 class="group flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition"
                                 :class="
                                     isActive('/views/activity/index.php')
-                                        ? 'bg-purple-50 font-semibold text-purple-600'
-                                        : 'text-gray-500 hover:bg-gray-50 hover:text-purple-600'
+                                        ? 'bg-blue-50 font-semibold text-blue-600'
+                                        : 'text-gray-500 hover:bg-gray-50 hover:text-blue-600'
                                 "
                             >
                                 <span
                                     class="h-1.5 w-1.5 rounded-full transition"
                                     :class="
                                         isActive('/views/activity/index.php')
-                                            ? 'bg-purple-500'
-                                            : 'bg-gray-300 group-hover:bg-purple-500'
+                                            ? 'bg-blue-500'
+                                            : 'bg-gray-300 group-hover:bg-blue-500'
                                     "
                                 ></span>
                                 Activity Logs
@@ -434,16 +431,16 @@
                                 class="group flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition"
                                 :class="
                                     isActive('/views/activity/login_aktivitas.php')
-                                        ? 'bg-purple-50 font-semibold text-purple-600'
-                                        : 'text-gray-500 hover:bg-gray-50 hover:text-purple-600'
+                                        ? 'bg-blue-50 font-semibold text-blue-600'
+                                        : 'text-gray-500 hover:bg-gray-50 hover:text-blue-600'
                                 "
                             >
                                 <span
                                     class="h-1.5 w-1.5 rounded-full transition"
                                     :class="
                                         isActive('/views/activity/login_aktivitas.php')
-                                            ? 'bg-purple-500'
-                                            : 'bg-gray-300 group-hover:bg-purple-500'
+                                            ? 'bg-blue-500'
+                                            : 'bg-gray-300 group-hover:bg-blue-500'
                                     "
                                 ></span>
                                 Login History
@@ -456,38 +453,6 @@
 
         </ul>
     </nav>
-
-
-    <!-- ================= LOGOUT ================= -->
-    <div class="border-t border-gray-200 bg-white p-3">
-        <a
-            href="<?= BASE_URL ?>proses/logout/logout.php"
-            class="group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 transition-all duration-200 hover:bg-red-50 hover:text-red-600"
-            :class="!sidebarOpen ? 'justify-center' : ''"
-        >
-            <div
-                class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-red-100 group-hover:text-red-600"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-5 w-5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="2"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6A2.25 2.25 0 005.25 5.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3-3H9m0 0l3-3m-3 3l3 3"
-                    />
-                </svg>
-            </div>
-
-            <span x-show="sidebarOpen" x-transition class="whitespace-nowrap">
-                Logout
-            </span>
-        </a>
-    </div>
+    
 
 </aside>

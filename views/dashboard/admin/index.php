@@ -49,18 +49,55 @@ $flash = getFlash();
 </head>
 <body class="bg-gray-100">
 
+<?php if ($flash): ?>
+
+<div id="flash-message"
+     class="fixed top-5 right-5 z-50 rounded-lg px-4 py-3 shadow-lg transition-all duration-500
+     <?= $flash['tipe'] == 'success'
+            ? 'bg-green-500 text-white'
+            : 'bg-red-500 text-white' ?>">
+    <?= htmlspecialchars($flash['pesan']) ?>
+</div>
+<?php endif; ?>
+
+
+
 <div class="flex h-screen overflow-hidden">
 
     <?php require_once __DIR__ . '/../../layout/sidebar.php';?>
     
     <div class="flex min-w-0 flex-1 flex-col overflow-hidden">
     
+    <?php require_once __DIR__ . '/../../layout/topbar.php';?>
+
     <!-- Content Home -->
     <main class="flex-1 overflow-y-auto bg-gray-100 px-8 pt-6 pb-6">
 
     <div class="space-y-8">
 
-    <?php require_once __DIR__ . '/../../layout/header.php';?>
+    <!-- Top Header -->
+    <header class="rounded-3xl border-b border-gray-200 bg-white shadow-sm">
+        <div class="flex items-center justify-between px-8 py-4">
+
+            <div>
+                <h1 class="text-2xl font-bold text-gray-900">
+                    Selamat Datang, <?= htmlspecialchars($_SESSION['username']) ?>
+                </h1>
+
+                <p class="text-sm text-gray-600">
+                    Kelola inventaris, kategori, lokasi, pengguna, dan aktivitas sistem.
+                </p>
+            </div>
+
+            <div class="rounded-xl border border-blue-100 bg-blue-50 px-5 py-3 text-right">
+                <p class="text-sm font-medium text-blue-600">Hari ini</p>
+                <p class="text-lg font-bold text-gray-900">
+                    <?= date('d F Y') ?>
+                </p>
+            </div>
+
+        </div>
+    </header>
 
     <!-- Statistik Utama -->
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">

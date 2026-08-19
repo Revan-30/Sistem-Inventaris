@@ -33,7 +33,7 @@ function closeTambahModal() {
     }, 300);
 }
 
-function openEditModal(id, kode, nama, kategoriId, lokasiId, stok, kondisi, $dokumen) {
+function openEditModal(id, kode, nama, kategoriId, lokasiId, stok, kondisi, dokumen) {
     document.getElementById('edit_id').value = id;
     document.getElementById('edit_kode').value = kode;
     document.getElementById('edit_nama').value = nama;
@@ -41,8 +41,17 @@ function openEditModal(id, kode, nama, kategoriId, lokasiId, stok, kondisi, $dok
     document.getElementById('edit_lokasi').value = lokasiId;
     document.getElementById('edit_stok').value = stok;
     document.getElementById('edit_kondisi').value = kondisi;
-    document.getElementById('edit_dokumen').value = $dokumen;
 
+    // Jangan mengisi value input type="file"
+    const dokumenInfo = document.getElementById('edit_dokumen_info');
+
+    if (dokumenInfo) {
+        dokumenInfo.textContent = dokumen
+            ? `Dokumen saat ini: ${dokumen}`
+            : 'Belum ada dokumen.';
+    }
+
+    // Buka modal
     const modal = document.getElementById('editModal');
     const content = document.getElementById('editModalContent');
 

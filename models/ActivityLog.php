@@ -14,18 +14,27 @@ class ActivityLog {
     }
 
     public function create($user_id, $username, $aktivitas, $ip_address, $user_agent) {
+        // Simpan waktu dari PHP dalam WIB agar konsisten di local dan aaPanel.
+        $created_at = date('Y-m-d H:i:s');
+
         $query = "INSERT INTO $this->table
-                  (user_id, username, aktivitas, ip_address, user_agent)
-                  VALUES (?, ?, ?, ?, ?)";
+                  (user_id, username, aktivitas, ip_address, user_agent, created_at)
+                  VALUES (?, ?, ?, ?, ?, ?)";
 
         $stmt = $this->conn->prepare($query);
+
+        if (!$stmt) {
+            return false;
+        }
+
         $stmt->bind_param(
-            "issss",
+            "isssss",
             $user_id,
             $username,
             $aktivitas,
             $ip_address,
-            $user_agent
+            $user_agent,
+            $created_at
         );
 
         return $stmt->execute();
@@ -40,4 +49,3 @@ class ActivityLog {
         return $this->conn->query($query);
     }
 }
-?>

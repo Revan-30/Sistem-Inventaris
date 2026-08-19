@@ -58,6 +58,8 @@ $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
     <!-- Area Konten -->
     <div class="flex min-w-0 flex-1 flex-col">
 
+    <?php require_once __DIR__ . '/../../../layout/topbar.php'; ?>
+
         <!-- ====================================================
              KONTEN DATA BARANG
         ===================================================== -->
@@ -74,15 +76,12 @@ $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
                     </div>
 
                     <div class="flex items-center gap-3">
-                        <a href="<?= BASE_URL ?>views/dashboard/admin/index.php"
-                           class="rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100">
-                            ← Kembali
-                        </a>
 
                         <button onclick="openTambahModal()"
                                 class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700">
                             + Tambah Barang
                         </button>
+
                     </div>
                 </div>
 
@@ -223,7 +222,7 @@ $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
             <input type="text" name="nama_barang" placeholder="Nama Barang"
                    class="w-full rounded-lg border px-3 py-2" required>
 
-            <select name="kategori_id" class="w-full rounded-lg border px-3 py-2" required>
+            <select name="kategori_id" class="w-full appearance-none rounded-lg border px-3 py-2" required>
                 <option value="">Pilih Kategori</option>
                 <?php foreach ($data_kategori as $k) : ?>
                     <option value="<?= $k['id'] ?>">
@@ -232,7 +231,7 @@ $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
                 <?php endforeach; ?>
             </select>
 
-            <select name="lokasi_id" class="w-full rounded-lg border px-3 py-2" required>
+            <select name="lokasi_id" class="w-full appearance-none rounded-lg border px-3 py-2" required>
                 <option value="">Pilih Lokasi</option>
                 <?php foreach ($data_lokasi as $k) : ?>
                     <option value="<?= $k['id'] ?>">
@@ -309,7 +308,7 @@ $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
                    class="w-full rounded-lg border px-3 py-2" required>
 
             <select name="kategori_id" id="edit_kategori"
-                    class="w-full rounded-lg border px-3 py-2" required>
+                    class="w-full appearance-none rounded-lg border px-3 py-2" required>
                 <option value="">Pilih Kategori</option>
                 <?php foreach ($data_kategori as $k) : ?>
                     <option value="<?= $k['id'] ?>">
@@ -319,7 +318,7 @@ $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
             </select>
 
             <select name="lokasi_id" id="edit_lokasi"
-                    class="w-full rounded-lg border px-3 py-2" required>
+                    class="w-full appearance-none rounded-lg border px-3 py-2" required>
                 <option value="">Pilih Lokasi</option>
                 <?php foreach ($data_lokasi as $k) : ?>
                     <option value="<?= $k['id'] ?>">
@@ -342,11 +341,21 @@ $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
                 Ganti Dokumen / Foto Barang
             </label>
 
-            <input type="file" name="dokumen" id="edit_dokumen"
-                   accept=".pdf,.jpg,.jpeg,.png"
-                   class="w-full rounded-lg border px-3 py-2">
+            <input
+                type="file"
+                name="dokumen"
+                id="edit_dokumen"
+                accept=".pdf,.jpg,.jpeg,.png"
+                class="w-full rounded-lg border px-3 py-2"
+            >
+            <p
+                id="edit_dokumen_info"
+                class="mt-2 text-xs text-gray-500"
+            >
+                Belum ada dokumen.
+            </p>
 
-            <p class="mt-1 text-xs text-gray-500">
+            <p class="mt-1 text-xs text-gray-400">
                 Kosongkan jika tidak ingin mengganti file.
             </p>
 
