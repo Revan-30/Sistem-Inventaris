@@ -76,3 +76,72 @@ function closeEditModal() {
         modal.classList.remove('flex');
     }, 300);
 }
+
+// =====================================================
+// MODAL DOKUMEN
+// =====================================================
+
+function openDokumenModal(url) {
+    const modal = document.getElementById('dokumenModal');
+    const content = document.getElementById('dokumenModalContent');
+    const preview = document.getElementById('dokumenPreview');
+
+    preview.src = url;
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+
+    content.classList.remove('scale-100', 'opacity-100');
+    content.classList.add('scale-95', 'opacity-0');
+
+    setTimeout(() => {
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
+    }, 10);
+}
+
+function closeDokumenModal() {
+    const modal = document.getElementById('dokumenModal');
+    const content = document.getElementById('dokumenModalContent');
+    const preview = document.getElementById('dokumenPreview');
+
+    content.classList.remove('scale-100', 'opacity-100');
+    content.classList.add('scale-95', 'opacity-0');
+
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        preview.src = '';
+    }, 300);
+}
+
+// =====================================================
+// MODAL NOTIFIKASI
+// =====================================================
+
+function closeFlashModal() {
+    const modal = document.getElementById('flashModal');
+    const content = document.getElementById('flashModalContent');
+
+    if (!modal || !content) return;
+
+    content.classList.remove('scale-100', 'opacity-100');
+    content.classList.add('scale-95', 'opacity-0');
+
+    setTimeout(() => {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+    }, 300);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('flashModal');
+    const content = document.getElementById('flashModalContent');
+
+    if (!modal || !content) return;
+
+    setTimeout(() => {
+        content.classList.remove('scale-95', 'opacity-0');
+        content.classList.add('scale-100', 'opacity-100');
+    }, 10);
+});

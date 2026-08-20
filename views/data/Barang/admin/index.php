@@ -24,6 +24,8 @@ $data_kategori = $kategori->getAll()->fetch_all(MYSQLI_ASSOC);
 $lokasi = new Lokasi($conn);
 $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
 
+$flash = getFlash();
+
 ?>
 
 <!DOCTYPE html>
@@ -63,6 +65,70 @@ $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
         <!-- ====================================================
              KONTEN DATA BARANG
         ===================================================== -->
+
+        <!-- ===================================================== -->
+        <!-- MODAL NOTIFIKASI -->
+        <!-- ===================================================== -->
+
+        <?php if ($flash) : ?>
+
+        <div
+            id="flashModal"
+            class="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4"
+        >
+            <div
+                id="flashModalContent"
+                class="w-full max-w-sm scale-95 transform rounded-2xl bg-white p-6 opacity-0 shadow-xl transition-all duration-300"
+            >
+
+                <!-- ICON -->
+                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M12 9v3.75m0 3h.007M10.29 3.86l-7.2 12.48A2 2 0 004.82 19h14.36a2 2 0 001.73-2.66l-7.2-12.48a2 2 0 00-3.42 0z"
+                        />
+                    </svg>
+                </div>
+
+                <!-- TEXT -->
+                <div class="mt-4 text-center">
+
+                    <h2 class="text-base font-semibold text-gray-800">
+                        Upload Dokumen Gagal
+                    </h2>
+
+                    <p class="mt-2 text-sm leading-6 text-gray-500">
+                        <?= htmlspecialchars($flash['pesan']) ?>
+                    </p>
+
+                </div>
+
+                <!-- BUTTON -->
+                <div class="mt-5 flex justify-center">
+
+                    <button
+                        type="button"
+                        onclick="closeFlashModal()"
+                        class="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
+                    >
+                        Mengerti
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+
+        <?php endif; ?>
 
         <main class="flex-1 overflow-y-auto bg-gray-100 p-8">
 
@@ -141,13 +207,21 @@ $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
                                     <!-- Dokumen -->
                                     <td class="px-4 py-3">
                                         <?php if (!empty($row['dokumen'])) : ?>
-                                            <a href="<?= BASE_URL ?>uploads/barang/<?= urlencode($row['dokumen']) ?>"
-                                               target="_blank"
-                                               class="rounded-lg bg-blue-600 px-3 py-1 text-xs font-medium text-white hover:bg-blue-700">
+
+                                            <button
+                                                type="button"
+                                                onclick="openDokumenModal(
+                                                    '<?= BASE_URL ?>uploads/barang/<?= urlencode($row['dokumen']) ?>'
+                                                )"
+                                                class="rounded-lg bg-blue-600 px-3 py-1 text-xs font-medium text-white transition hover:bg-blue-700"
+                                            >
                                                 Lihat
-                                            </a>
+                                            </button>
+
                                         <?php else : ?>
+
                                             <span class="text-sm text-gray-400">-</span>
+
                                         <?php endif; ?>
                                     </td>
 
@@ -208,7 +282,7 @@ $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
          class="w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0 shadow-xl transition-all duration-300">
 
         <div class="mb-4 flex items-center justify-between">
-            <h2 class="text-xl font-bold">Tambah Data Barang</h2>
+            <h2 class="text-lg font-semibold">Tambah Data Barang</h2>
         </div>
 
         <form action="<?= BASE_URL ?>proses/barang/tambah.php"
@@ -291,7 +365,7 @@ $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
          class="w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0 shadow-xl transition-all duration-300">
 
         <div class="mb-4 flex items-center justify-between">
-            <h2 class="text-xl font-bold">Edit Data Barang</h2>
+            <h2 class="text-lg font-semibold">Edit Data Barang</h2>
         </div>
 
         <form action="<?= BASE_URL ?>proses/barang/edit.php"
@@ -372,6 +446,60 @@ $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
             </div>
 
         </form>
+    </div>
+</div>
+
+<!-- ===================================================== -->
+<!-- MODAL DOKUMEN -->
+<!-- ===================================================== -->
+
+<div
+    id="dokumenModal"
+    class="fixed inset-0 z-50 hidden items-center justify-center bg-black/50 p-4"
+>
+    <div
+        id="dokumenModalContent"
+        class="w-full max-w-5xl scale-95 transform overflow-hidden rounded-2xl bg-white opacity-0 shadow-xl transition-all duration-300"
+    >
+
+        <!-- HEADER -->
+        <div class="flex items-center justify-between px-6 py-4">
+            <div>
+                <h2 class="text-lg font-semibold text-gray-800">
+                    Dokumen Barang
+                </h2>
+
+                <p class="mt-0.5 text-xs text-gray-400">
+                    Pratinjau dokumen inventaris
+                </p>
+            </div>
+        </div>
+
+        <!-- PREVIEW -->
+        <div class="bg-gray-100 p-4">
+            <div
+                class="overflow-hidden rounded-xl border border-gray-200 bg-white"
+            >
+                <iframe
+                    id="dokumenPreview"
+                    src=""
+                    class="h-[65vh] w-full"
+                    frameborder="0"
+                ></iframe>
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="flex justify-end bg-white px-6 py-3">
+            <button
+                type="button"
+                onclick="closeDokumenModal()"
+                class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-100"
+            >
+                Batal
+            </button>
+        </div>
+
     </div>
 </div>
 

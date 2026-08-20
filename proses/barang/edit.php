@@ -54,12 +54,16 @@ if (isset($_FILES['dokumen']) && $_FILES['dokumen']['error'] === UPLOAD_ERR_OK) 
 
     // Validasi ekstensi
     if (!in_array($ext, $allowed)) {
-        die('Format file tidak didukung. Hanya PDF, JPG, JPEG, dan PNG.');
+        setFlash('Format dokumen tidak didukung. Gunakan PDF, JPG, JPEG, atau PNG.','error');
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
     }
 
     // Validasi ukuran
     if ($fileSize > $maxSize) {
-        die('Ukuran file maksimal 2 MB.');
+        setFlash('Ukuran dokumen terlalu besar. Maksimal ukuran file adalah 2 MB.', 'error');
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit;
     }
 
     // Folder upload
