@@ -19,6 +19,8 @@ $data = $activity->getLoginHistory();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login History</title>
 
+    <script src="<?= BASE_URL ?>js/profile.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
@@ -105,6 +107,8 @@ $data = $activity->getLoginHistory();
                 </div>
 
             </div>
+
+            <?php require_once __DIR__ . '/../layout/modal-profile.php'; ?>
 
         </main>
 

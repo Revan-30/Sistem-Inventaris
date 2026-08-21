@@ -101,7 +101,7 @@ $flash = getFlash();
 
                     <span class="h-1.5 w-1.5 rounded-full bg-blue-200"></span>
 
-                    Sistem Inventaris Gudang
+                    Sistem Inventaris
 
                 </div>
 
@@ -283,21 +283,6 @@ $flash = getFlash();
                                 Login
                             </span>
 
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-4 w-4"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
-                                stroke-width="2"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M13.5 4.5L19 10m0 0l-5.5 5.5M19 10H5"
-                                />
-                            </svg>
-
                         </button>
 
                     </form>
@@ -307,7 +292,7 @@ $flash = getFlash();
                     <div class="mt-8 border-t border-gray-100 pt-5 text-center">
 
                         <p class="text-xs text-gray-400">
-                            Sistem Manajemen Inventaris Gudang
+                            Sistem Manajemen Inventaris
                         </p>
 
                     </div>

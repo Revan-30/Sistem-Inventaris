@@ -38,6 +38,7 @@ $flash = getFlash();
 
     <!-- JavaScript -->
     <script src="<?= BASE_URL ?>js/barang.js"></script>
+    <script src="<?= BASE_URL ?>js/profile.js"></script>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -261,6 +262,8 @@ $flash = getFlash();
                 </div>
 
             </div>
+
+            <?php require_once __DIR__ . '/../../layout/modal-profile.php';?>
 
         </main>
 

@@ -26,14 +26,17 @@ $kondisi     = trim($_POST['kondisi']);
 
 // Validasi stok
 if ($stok < 0) {
-    die('Stok tidak boleh kurang dari 0');
+    setFlash('Stok tidak boleh kurang dari 0.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
 }
-
 // Ambil data lama
 $dataLama = $barang->getById($id);
 
 if (!$dataLama) {
-    die('Data barang tidak ditemukan');
+    setFlash('Data barang tidak ditemukan.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
 }
 
 $dokumen = $dataLama['dokumen']; // default: pakai dokumen lama
@@ -55,14 +58,14 @@ if (isset($_FILES['dokumen']) && $_FILES['dokumen']['error'] === UPLOAD_ERR_OK) 
     // Validasi ekstensi
     if (!in_array($ext, $allowed)) {
         setFlash('Format dokumen tidak didukung. Gunakan PDF, JPG, JPEG, atau PNG.','error');
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
         exit;
     }
 
     // Validasi ukuran
     if ($fileSize > $maxSize) {
         setFlash('Ukuran dokumen terlalu besar. Maksimal ukuran file adalah 2 MB.', 'error');
-        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
         exit;
     }
 
@@ -83,7 +86,9 @@ if (isset($_FILES['dokumen']) && $_FILES['dokumen']['error'] === UPLOAD_ERR_OK) 
 
     // Simpan file baru
     if (!move_uploaded_file($fileTmp, $uploadDir . $dokumen)) {
-        die('Gagal mengupload file.');
+        setFlash('Dokumen gagal diupload. Silakan coba lagi.', 'error');
+        header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+        exit;
     }
 }
 

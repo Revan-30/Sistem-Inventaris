@@ -20,6 +20,8 @@ $data = $user->getAll();
     <title>Data Pengguna</title>
 
     <script src="<?= BASE_URL ?>js/user.js"></script>
+    <script src="<?= BASE_URL ?>js/profile.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
@@ -125,6 +127,8 @@ $data = $user->getAll();
 
             </div>
 
+            <?php require_once __DIR__ . '/../../layout/modal-profile.php';?>
+
         </main>
 
         <!-- Footer -->
@@ -143,7 +147,7 @@ $data = $user->getAll();
          class="w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0 shadow-xl transition-all duration-300">
 
         <div class="mb-4 flex items-center justify-between">
-            <h2 class="text-xl font-bold">Tambah Data Pengguna</h2>
+            <h2 class="text-lg font-semibold">Tambah Data Pengguna</h2>
         </div>
 
         <form action="<?= BASE_URL ?>proses/user/tambah.php" method="POST" class="space-y-4">
@@ -187,7 +191,7 @@ $data = $user->getAll();
          class="w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0 shadow-xl transition-all duration-300">
 
         <div class="mb-4 flex items-center justify-between">
-            <h2 class="text-xl font-bold">Edit Data Pengguna</h2>
+            <h2 class="text-lg font-semibold">Edit Data Pengguna</h2>
         </div>
 
         <form action="<?= BASE_URL ?>proses/user/edit.php" method="POST" class="space-y-4">

@@ -21,6 +21,7 @@ $data = $kategori->getAll();
 
     <!-- JavaScript -->
     <script src="<?= BASE_URL ?>js/kategori_barang.js"></script>
+    <script src="<?= BASE_URL ?>js/profile.js"></script>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
@@ -128,6 +129,8 @@ $data = $kategori->getAll();
 
             </div>
 
+            <?php require_once __DIR__ . '/../../layout/modal-profile.php';?>
+
         </main>
 
         <!-- Footer -->
@@ -146,7 +149,7 @@ $data = $kategori->getAll();
          class="w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0 shadow-xl transition-all duration-300">
 
         <div class="mb-4 flex items-center justify-between">
-            <h2 class="text-xl font-bold">Tambah Data Kategori</h2>
+            <h2 class="text-lg font-semibold">Tambah Data Kategori</h2>
         </div>
 
         <form action="<?= BASE_URL ?>proses/kategori_barang/tambah.php"
@@ -192,7 +195,7 @@ $data = $kategori->getAll();
          class="w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0 shadow-xl transition-all duration-300">
 
         <div class="mb-4 flex items-center justify-between">
-            <h2 class="text-xl font-bold">Edit Data Kategori</h2>
+            <h2 class="text-lg font-semibold">Edit Data Kategori</h2>
         </div>
 
         <form action="<?= BASE_URL ?>proses/kategori_barang/edit.php"

@@ -96,9 +96,10 @@
                 <div class="p-2">
 
                     <!-- PROFILE -->
-                    <a
-                        href="#"
-                        class="group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 transition hover:bg-blue-50 hover:text-blue-600"
+                    <button
+                        type="button"
+                        onclick="openProfileModal()"
+                        class="group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 transition hover:bg-blue-50 hover:text-blue-600"
                     >
 
                         <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-blue-100 group-hover:text-blue-600">
@@ -122,13 +123,14 @@
 
                         Profil Saya
 
-                    </a>
+                    </button>
 
 
                     <!-- SETTINGS -->
-                    <a
-                        href="#"
-                        class="group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 transition hover:bg-blue-50 hover:text-blue-600"
+                    <button
+                        type="button"
+                        onclick="openSettingsModal()"
+                        class="group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 transition hover:bg-blue-50 hover:text-blue-600"
                     >
 
                         <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-blue-100 group-hover:text-blue-600">
@@ -152,7 +154,7 @@
 
                         Pengaturan
 
-                    </a>
+                    </button>
 
                 </div>
 
