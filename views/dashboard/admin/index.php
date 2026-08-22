@@ -34,7 +34,6 @@ $aktivitasHariIni = $conn->query(
      WHERE DATE(created_at) = CURDATE()"
 )->fetch_assoc()['total'] ?? 0;
 
-$flash = getFlash();
 ?>
 
 <!DOCTYPE html>
@@ -51,18 +50,7 @@ $flash = getFlash();
 </head>
 <body class="bg-gray-100">
 
-<?php if ($flash): ?>
-
-<div id="flash-message"
-     class="fixed top-5 right-5 z-50 rounded-lg px-4 py-3 shadow-lg transition-all duration-500
-     <?= $flash['tipe'] == 'success'
-            ? 'bg-green-500 text-white'
-            : 'bg-red-500 text-white' ?>">
-    <?= htmlspecialchars($flash['pesan']) ?>
-</div>
-<?php endif; ?>
-
-
+<?php require_once __DIR__ . '/../../layout/flash.php';?>
 
 <div class="flex h-screen overflow-hidden">
 
@@ -105,7 +93,9 @@ $flash = getFlash();
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
 
         <!-- Total Users -->
-        <div class="group rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+        <div class="
+            group rounded-3xl border border-gray-200 bg-white p-6 shadow-sm
+            transition hover:-translate-y-1 hover:shadow-md">
             <div class="mb-4 flex items-center justify-between">
                 <div class="rounded-2xl bg-emerald-100 p-3 text-emerald-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -122,7 +112,9 @@ $flash = getFlash();
         </div>
 
         <!-- Total Barang -->
-        <div class="group rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+        <div class="
+            group rounded-3xl border border-gray-200 bg-white p-6 shadow-sm
+            transition hover:-translate-y-1 hover:shadow-md">
             <div class="mb-4 flex items-center justify-between">
                 <div class="rounded-2xl bg-blue-100 p-3 text-blue-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -139,7 +131,9 @@ $flash = getFlash();
         </div>
 
         <!-- Total Stok -->
-        <div class="group rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+        <div class="
+            group rounded-3xl border border-gray-200 bg-white p-6 shadow-sm
+            transition hover:-translate-y-1 hover:shadow-md">
             <div class="mb-4 flex items-center justify-between">
                 <div class="rounded-2xl bg-amber-100 p-3 text-amber-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -156,7 +150,9 @@ $flash = getFlash();
         </div>
 
         <!-- Aktivitas Hari Ini -->
-        <div class="group rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+        <div class="
+            group rounded-3xl border border-gray-200 bg-white p-6 shadow-sm
+            transition hover:-translate-y-1 hover:shadow-md">
             <div class="mb-4 flex items-center justify-between">
                 <div class="rounded-2xl bg-purple-100 p-3 text-purple-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -178,7 +174,9 @@ $flash = getFlash();
     <div class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
 
         <!-- Kategori Barang -->
-        <div class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+        <div class="
+            rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition
+            hover:-translate-y-1 hover:shadow-md">
             <div class="mb-4 flex items-center justify-between">
                 <div class="rounded-2xl bg-rose-100 p-3 text-rose-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -198,7 +196,9 @@ $flash = getFlash();
         </div>
 
         <!-- Lokasi Penyimpanan -->
-        <div class="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+        <div class="
+            rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition
+            hover:-translate-y-1 hover:shadow-md">
             <div class="mb-4 flex items-center justify-between">
                 <div class="rounded-2xl bg-cyan-100 p-3 text-cyan-600">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">

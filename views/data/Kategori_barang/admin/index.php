@@ -32,6 +32,8 @@ $data = $kategori->getAll();
 
 <body class="bg-gray-100">
 
+<?php require_once __DIR__ . '/../../../layout/flash.php';?>
+
 <div class="flex h-screen overflow-hidden">
 
     <!-- Sidebar -->
@@ -58,7 +60,9 @@ $data = $kategori->getAll();
                     <div class="flex items-center gap-3">
 
                         <button onclick="openTambahModal()"
-                                class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700">
+                                class="
+                                    rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white
+                                    transition hover:bg-blue-700">
                             + Tambah Kategori
                         </button>
                         
@@ -106,13 +110,17 @@ $data = $kategori->getAll();
                                                     '<?= htmlspecialchars($row['kode_kategori'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
                                                     '<?= htmlspecialchars($row['nama_kategori'] ?? '', ENT_QUOTES, 'UTF-8') ?>'
                                                 )"
-                                                class="rounded-lg bg-yellow-500 px-3 py-2 text-xs font-medium text-black transition hover:bg-yellow-600">
+                                                class="
+                                                    rounded-lg bg-yellow-500 px-3 py-2 text-xs font-medium text-black
+                                                    transition hover:bg-yellow-600">
                                                 Edit
                                             </button>
 
                                             <!-- Hapus -->
-                                            <a href="<?= BASE_URL ?>proses/kategori/hapus.php?id=<?= htmlspecialchars($row['id'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                                               class="rounded-lg bg-red-600 px-3 py-2 text-xs font-medium text-white transition hover:bg-red-700"
+                                            <a href="<?= BASE_URL ?>proses/kategori_barang/hapus.php?id=<?= htmlspecialchars($row['id'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
+                                               class="
+                                                   rounded-lg bg-red-600 px-3 py-2 text-xs font-medium text-white
+                                                   transition hover:bg-red-700"
                                                onclick="return confirm('Yakin?')">
                                                 Hapus
                                             </a>
@@ -129,7 +137,7 @@ $data = $kategori->getAll();
 
             </div>
 
-            <?php require_once __DIR__ . '/../../layout/modal-profile.php';?>
+            <?php require_once __DIR__ . '/../../../layout/modal-profile.php';?>
 
         </main>
 
@@ -143,10 +151,14 @@ $data = $kategori->getAll();
 
 <!-- Modal Tambah -->
 <div id="tambahModal"
-     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 transition-opacity duration-300">
+     class="
+         fixed inset-0 z-50 hidden items-center justify-center bg-black/40
+         transition-opacity duration-300">
 
     <div id="tambahModalContent"
-         class="w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0 shadow-xl transition-all duration-300">
+         class="
+             w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0
+             shadow-xl transition-all duration-300">
 
         <div class="mb-4 flex items-center justify-between">
             <h2 class="text-lg font-semibold">Tambah Data Kategori</h2>
@@ -189,10 +201,14 @@ $data = $kategori->getAll();
 
 <!-- Modal Edit -->
 <div id="editModal"
-     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 transition-opacity duration-300">
+     class="
+         fixed inset-0 z-50 hidden items-center justify-center bg-black/40
+         transition-opacity duration-300">
 
     <div id="editModalContent"
-         class="w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0 shadow-xl transition-all duration-300">
+         class="
+             w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0
+             shadow-xl transition-all duration-300">
 
         <div class="mb-4 flex items-center justify-between">
             <h2 class="text-lg font-semibold">Edit Data Kategori</h2>

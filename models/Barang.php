@@ -3,11 +3,14 @@ class Barang {
     private $conn;
     private $table = 'barang';
 
+    // Inisialisasi object dan koneksi yang dibutuhkan.
+    // Fungsi: __construct
     public function __construct($db) {
         $this->conn = $db;
     }
 
     // READ
+    // Fungsi: getAll
     public function getAll() {
         $query = "SELECT
                     barang.*,
@@ -27,6 +30,7 @@ class Barang {
     }
 
     // CREATE
+    // Fungsi: create
     public function create(
         $kode_barang, 
         $nama_barang, 
@@ -66,6 +70,7 @@ class Barang {
     }
 
     // GET BY ID
+    // Fungsi: getById
     public function getById($id) {
         $query = "SELECT * FROM {$this->table} WHERE id = ?";
 
@@ -87,6 +92,7 @@ class Barang {
     }
 
     // UPDATE
+    // Fungsi: update
     public function update(
         $id, 
         $kode_barang, 
@@ -132,6 +138,7 @@ class Barang {
     }
 
     // DELETE
+    // Fungsi: delete
     public function delete($id) {
         $query = "DELETE FROM {$this->table} WHERE id = ?";
 

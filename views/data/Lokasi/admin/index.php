@@ -32,6 +32,8 @@ $data = $lokasi->getAll();
 
 <body class="bg-gray-100">
 
+<?php require_once __DIR__ . '/../../../layout/flash.php';?>
+
 <div class="flex h-screen overflow-hidden">
 
     <!-- Sidebar -->
@@ -58,7 +60,9 @@ $data = $lokasi->getAll();
                     <div class="flex items-center gap-3">
 
                         <button onclick="openTambahModal()"
-                                class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700">
+                                class="
+                                    rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white
+                                    transition hover:bg-blue-700">
                             + Tambah Lokasi
                         </button>
                         
@@ -112,13 +116,17 @@ $data = $lokasi->getAll();
                                                     '<?= htmlspecialchars($row['nama_lokasi'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
                                                     '<?= htmlspecialchars($row['keterangan'] ?? '', ENT_QUOTES, 'UTF-8') ?>'
                                                 )"
-                                                class="rounded-lg bg-yellow-500 px-3 py-2 text-xs font-medium text-black transition hover:bg-yellow-600">
+                                                class="
+                                                    rounded-lg bg-yellow-500 px-3 py-2 text-xs font-medium text-black
+                                                    transition hover:bg-yellow-600">
                                                 Edit
                                             </button>
 
                                             <!-- Hapus -->
                                             <a href="<?= BASE_URL ?>proses/lokasi/hapus.php?id=<?= htmlspecialchars($row['id'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
-                                               class="rounded-lg bg-red-600 px-3 py-2 text-xs font-medium text-white transition hover:bg-red-700"
+                                               class="
+                                                   rounded-lg bg-red-600 px-3 py-2 text-xs font-medium text-white
+                                                   transition hover:bg-red-700"
                                                onclick="return confirm('Yakin?')">
                                                 Hapus
                                             </a>
@@ -135,7 +143,7 @@ $data = $lokasi->getAll();
 
             </div>
 
-            <?php require_once __DIR__ . '/../../layout/modal-profile.php';?>
+            <?php require_once __DIR__ . '/../../../layout/modal-profile.php';?>
 
         </main>
 
@@ -149,10 +157,14 @@ $data = $lokasi->getAll();
 
 <!-- Modal Tambah -->
 <div id="tambahModal"
-     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 transition-opacity duration-300">
+     class="
+         fixed inset-0 z-50 hidden items-center justify-center bg-black/40
+         transition-opacity duration-300">
 
     <div id="tambahModalContent"
-         class="w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0 shadow-xl transition-all duration-300">
+         class="
+             w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0
+             shadow-xl transition-all duration-300">
 
         <div class="mb-4 flex items-center justify-between">
             <h2 class="text-lg font-semibold">Tambah Data Lokasi</h2>
@@ -191,10 +203,14 @@ $data = $lokasi->getAll();
 
 <!-- Modal Edit -->
 <div id="editModal"
-     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 transition-opacity duration-300">
+     class="
+         fixed inset-0 z-50 hidden items-center justify-center bg-black/40
+         transition-opacity duration-300">
 
     <div id="editModalContent"
-         class="w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0 shadow-xl transition-all duration-300">
+         class="
+             w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0
+             shadow-xl transition-all duration-300">
 
         <div class="mb-4 flex items-center justify-between">
             <h2 class="text-lg font-semibold">Edit Data Lokasi</h2>

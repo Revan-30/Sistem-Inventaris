@@ -40,7 +40,9 @@
         }
     }"
     :class="sidebarOpen ? 'w-64' : 'w-20'"
-    class="relative flex min-h-screen flex-col border-r border-gray-200 bg-white shadow-sm transition-all duration-300"
+    class="
+        relative flex min-h-screen flex-col border-r border-gray-200 bg-white
+        shadow-sm transition-all duration-300"
 >
 
     <!-- ================= HEADER SIDEBAR ================= -->
@@ -53,7 +55,9 @@
         >
             <div class="flex items-center gap-3">
 
-                <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm">
+                <div class="
+                    flex h-9 w-9 shrink-0 items-center justify-center rounded-xl
+                    bg-blue-600 text-white shadow-sm">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         class="h-5 w-5"
@@ -80,7 +84,10 @@
         <!-- Hamburger -->
         <button
             @click="sidebarOpen = !sidebarOpen"
-            class="absolute right-3 top-3 flex h-10 w-10 items-center justify-center rounded-xl text-gray-500 transition-all duration-200 hover:bg-blue-50 hover:text-blue-600"
+            class="
+                absolute right-3 top-3 flex h-10 w-10 items-center justify-center
+                rounded-xl text-gray-500 transition-all duration-200 hover:bg-blue-50
+                hover:text-blue-600"
             :class="!sidebarOpen ? 'left-1/2 -translate-x-1/2 right-auto' : ''"
         >
             <svg
@@ -110,7 +117,9 @@
             <li>
                 <a
                     href="<?= BASE_URL ?>views/dashboard/admin/index.php"
-                    class="group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200"
+                    class="
+                        group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm
+                        font-medium transition-all duration-200"
                     :class="[
                         !sidebarOpen ? 'justify-center' : '',
                         isActive('/views/dashboard/admin/')
@@ -119,7 +128,9 @@
                     ]"
                 >
                     <div
-                        class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-all duration-200"
+                        class="
+                            flex h-9 w-9 shrink-0 items-center justify-center rounded-lg
+                            transition-all duration-200"
                         :class="
                             isActive('/views/dashboard/admin/')
                                 ? 'bg-blue-100 text-blue-600'
@@ -153,7 +164,9 @@
             <li>
                 <button
                     @click="toggleData()"
-                    class="group flex w-full items-center rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200"
+                    class="
+                        group flex w-full items-center rounded-xl px-3 py-2.5 text-sm
+                        font-medium transition-all duration-200"
                     :class="[
                         sidebarOpen ? 'justify-between' : 'justify-center',
                         isDataActive() || dataOpen
@@ -165,7 +178,9 @@
 
                         <!-- Icon -->
                         <div
-                            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-all duration-200"
+                            class="
+                                flex h-9 w-9 shrink-0 items-center justify-center rounded-lg
+                                transition-all duration-200"
                             :class="
                                 isDataActive() || dataOpen
                                     ? 'bg-blue-100 text-blue-600'
@@ -328,7 +343,9 @@
             <li>
                 <button
                     @click="toggleActivity()"
-                    class="group flex w-full items-center rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200"
+                    class="
+                        group flex w-full items-center rounded-xl px-3 py-2.5 text-sm
+                        font-medium transition-all duration-200"
                     :class="[
                         sidebarOpen ? 'justify-between' : 'justify-center',
                         isActivityActive() || activityOpen
@@ -340,7 +357,9 @@
 
                         <!-- Icon -->
                         <div
-                            class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-all duration-200"
+                            class="
+                                flex h-9 w-9 shrink-0 items-center justify-center rounded-lg
+                                transition-all duration-200"
                             :class="
                                 isActivityActive() || activityOpen
                                     ? 'bg-blue-100 text-blue-600'

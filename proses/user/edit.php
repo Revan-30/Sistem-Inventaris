@@ -14,10 +14,31 @@ $user = new User($conn);
 $activity = new ActivityLog($conn);
 
 // Ambil data dari form
-$id       = (int) $_POST['id'];
-$username = trim($_POST['username']);
-$password = $_POST['password'];
-$role     = trim($_POST['role']);
+$id       = (int) ($_POST['id'] ?? 0);
+$username = trim($_POST['username'] ?? '');
+$password = $_POST['password'] ?? '';
+$role     = trim($_POST['role'] ?? '');
+
+// Validasi input wajib
+if ($id <= 0) {
+    setFlash('ID user tidak valid.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/User/index.php');
+    exit;
+}
+
+if ($username === '') {
+    setFlash('Username wajib diisi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/User/index.php');
+    exit;
+}
+
+if ($role === '') {
+    setFlash('Role wajib dipilih.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/User/index.php');
+    exit;
+}
+
+// Password boleh kosong saat edit agar password lama tetap digunakan.
 
 // Update user
 if ($user->update($id, $username, $password, $role)) {
@@ -30,6 +51,12 @@ if ($user->update($id, $username, $password, $role)) {
         $_SERVER['REMOTE_ADDR'],
         $_SERVER['HTTP_USER_AGENT']
     );
+    
+    setFlash('Data user berhasil diedit.', 'success');
+
+} else {
+
+    setFlash('Gagal mengedit data user.', 'error');
 }
 
 header('Location: ' . BASE_URL . 'views/data/User/index.php');

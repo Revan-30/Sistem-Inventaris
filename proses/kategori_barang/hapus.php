@@ -41,9 +41,13 @@ if ($dataKategori) {
             $_SERVER['HTTP_USER_AGENT']
         );
     }
+
+    setFlash('Data kategori barang berhasil dihapus.', 'success');
+
+} else {
+
+    setFlash('Gagal menghapus data kategori barang.', 'error');
 }
 
-
-// Mengembalikan user ke halaman Data Kategori Barang setelah proses selesai
 header('Location: ' . BASE_URL . 'views/data/Kategori_barang/admin/index.php');
 exit;

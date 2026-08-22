@@ -17,9 +17,21 @@ $activity         = new ActivityLog($conn);
 
 
 // Mengambil data kategori barang yang dikirim dari form
-$kode_kategori = trim($_POST['kode_kategori']);
-$nama_kategori = trim($_POST['nama_kategori']);
+$kode_kategori = trim($_POST['kode_kategori'] ?? '');
+$nama_kategori = trim($_POST['nama_kategori'] ?? '');
 
+// Validasi input wajib
+if ($kode_kategori === '') {
+    setFlash('Kode kategori wajib diisi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Kategori_barang/admin/index.php');
+    exit;
+}
+
+if ($nama_kategori === '') {
+    setFlash('Nama kategori wajib diisi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Kategori_barang/admin/index.php');
+    exit;
+}
 
 // Menyimpan data kategori barang ke database
 if ($kategori_barang->create($kode_kategori, $nama_kategori)) {
@@ -32,8 +44,13 @@ if ($kategori_barang->create($kode_kategori, $nama_kategori)) {
         $_SERVER['REMOTE_ADDR'],
         $_SERVER['HTTP_USER_AGENT']
     );
+
+    setFlash('Data kategori barang berhasil ditambahkan.', 'success');
+
+} else {
+
+    setFlash('Gagal menambahkan data kategori barang.', 'error');
 }
 
-// Mengembalikan user ke halaman Data Kategori Barang setelah proses selesai
 header('Location: ' . BASE_URL . 'views/data/Kategori_barang/admin/index.php');
 exit;

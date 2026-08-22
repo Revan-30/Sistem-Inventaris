@@ -44,8 +44,13 @@ if ($dataBarang) {
             $_SERVER['HTTP_USER_AGENT']
         );
     }
+
+    setFlash('Data barang berhasil dihapus.', 'success');
+
+} else {
+
+    setFlash('Gagal menghapus data barang.', 'error');
 }
 
-// Redirect kembali ke halaman barang
 header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
 exit;

@@ -24,8 +24,6 @@ $data_kategori = $kategori->getAll()->fetch_all(MYSQLI_ASSOC);
 $lokasi = new Lokasi($conn);
 $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
 
-$flash = getFlash();
-
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +47,8 @@ $flash = getFlash();
 
 <body class="bg-gray-100">
 
+<?php require_once __DIR__ . '/../../../layout/flash.php';?>
+
 <!-- ============================================================
      LAYOUT UTAMA
 ============================================================ -->
@@ -66,71 +66,7 @@ $flash = getFlash();
         <!-- ====================================================
              KONTEN DATA BARANG
         ===================================================== -->
-
-        <!-- ===================================================== -->
-        <!-- MODAL NOTIFIKASI -->
-        <!-- ===================================================== -->
-
-        <?php if ($flash) : ?>
-
-        <div
-            id="flashModal"
-            class="fixed inset-0 z-[100] flex items-center justify-center bg-black/40 p-4"
-        >
-            <div
-                id="flashModalContent"
-                class="w-full max-w-sm scale-95 transform rounded-2xl bg-white p-6 opacity-0 shadow-xl transition-all duration-300"
-            >
-
-                <!-- ICON -->
-                <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-red-100 text-red-600">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M12 9v3.75m0 3h.007M10.29 3.86l-7.2 12.48A2 2 0 004.82 19h14.36a2 2 0 001.73-2.66l-7.2-12.48a2 2 0 00-3.42 0z"
-                        />
-                    </svg>
-                </div>
-
-                <!-- TEXT -->
-                <div class="mt-4 text-center">
-
-                    <h2 class="text-base font-semibold text-gray-800">
-                        Upload Dokumen Gagal
-                    </h2>
-
-                    <p class="mt-2 text-sm leading-6 text-gray-500">
-                        <?= htmlspecialchars($flash['pesan']) ?>
-                    </p>
-
-                </div>
-
-                <!-- BUTTON -->
-                <div class="mt-5 flex justify-center">
-
-                    <button
-                        type="button"
-                        onclick="closeFlashModal()"
-                        class="rounded-lg bg-blue-600 px-5 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
-                    >
-                        Mengerti
-                    </button>
-
-                </div>
-
-            </div>
-        </div>
-
-        <?php endif; ?>
-
+        
         <main class="flex-1 overflow-y-auto bg-gray-100 p-8">
 
             <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -145,7 +81,9 @@ $flash = getFlash();
                     <div class="flex items-center gap-3">
 
                         <button onclick="openTambahModal()"
-                                class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-blue-700">
+                                class="
+                                    rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white
+                                    transition hover:bg-blue-700">
                             + Tambah Barang
                         </button>
 
@@ -214,7 +152,9 @@ $flash = getFlash();
                                                 onclick="openDokumenModal(
                                                     '<?= BASE_URL ?>uploads/barang/<?= urlencode($row['dokumen']) ?>'
                                                 )"
-                                                class="rounded-lg bg-blue-600 px-3 py-1 text-xs font-medium text-white transition hover:bg-blue-700"
+                                                class="
+                                                    rounded-lg bg-blue-600 px-3 py-1 text-xs font-medium text-white
+                                                    transition hover:bg-blue-700"
                                             >
                                                 Lihat
                                             </button>
@@ -241,13 +181,17 @@ $flash = getFlash();
                                                     '<?= htmlspecialchars($row['kondisi'] ?? '', ENT_QUOTES, 'UTF-8') ?>',
                                                     '<?= htmlspecialchars($row['dokumen'] ?? '', ENT_QUOTES, 'UTF-8') ?>'
                                                 )"
-                                                class="rounded-lg bg-yellow-500 px-3 py-2 text-xs font-medium text-black transition hover:bg-yellow-600">
+                                                class="
+                                                    rounded-lg bg-yellow-500 px-3 py-2 text-xs font-medium text-black
+                                                    transition hover:bg-yellow-600">
                                                 Edit
                                             </button>
 
                                             <a href="<?= BASE_URL ?>proses/barang/hapus.php?id=<?= htmlspecialchars($row['id'] ?? '', ENT_QUOTES, 'UTF-8') ?>"
                                                onclick="return confirm('Yakin?')"
-                                               class="rounded-lg bg-red-600 px-3 py-2 text-xs font-medium text-white transition hover:bg-red-700">
+                                               class="
+                                                   rounded-lg bg-red-600 px-3 py-2 text-xs font-medium text-white
+                                                   transition hover:bg-red-700">
                                                 Hapus
                                             </a>
 
@@ -263,7 +207,7 @@ $flash = getFlash();
 
             </div>
 
-            <?php require_once __DIR__ . '/../../layout/modal-profile.php';?>
+            <?php require_once __DIR__ . '/../../../layout/modal-profile.php';?>
 
         </main>
 
@@ -279,10 +223,14 @@ $flash = getFlash();
 ============================================================ -->
 
 <div id="tambahModal"
-     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 transition-opacity duration-300">
+     class="
+         fixed inset-0 z-50 hidden items-center justify-center bg-black/40
+         transition-opacity duration-300">
 
     <div id="tambahModalContent"
-         class="w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0 shadow-xl transition-all duration-300">
+         class="
+             w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0
+             shadow-xl transition-all duration-300">
 
         <div class="mb-4 flex items-center justify-between">
             <h2 class="text-lg font-semibold">Tambah Data Barang</h2>
@@ -362,10 +310,14 @@ $flash = getFlash();
 ============================================================ -->
 
 <div id="editModal"
-     class="fixed inset-0 z-50 hidden items-center justify-center bg-black/40 transition-opacity duration-300">
+     class="
+         fixed inset-0 z-50 hidden items-center justify-center bg-black/40
+         transition-opacity duration-300">
 
     <div id="editModalContent"
-         class="w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0 shadow-xl transition-all duration-300">
+         class="
+             w-full max-w-lg scale-95 transform rounded-2xl bg-white p-6 opacity-0
+             shadow-xl transition-all duration-300">
 
         <div class="mb-4 flex items-center justify-between">
             <h2 class="text-lg font-semibold">Edit Data Barang</h2>
@@ -462,7 +414,9 @@ $flash = getFlash();
 >
     <div
         id="dokumenModalContent"
-        class="w-full max-w-5xl scale-95 transform overflow-hidden rounded-2xl bg-white opacity-0 shadow-xl transition-all duration-300"
+        class="
+            w-full max-w-5xl scale-95 transform overflow-hidden rounded-2xl
+            bg-white opacity-0 shadow-xl transition-all duration-300"
     >
 
         <!-- HEADER -->
@@ -497,7 +451,9 @@ $flash = getFlash();
             <button
                 type="button"
                 onclick="closeDokumenModal()"
-                class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-100"
+                class="
+                    rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm
+                    font-medium text-gray-600 transition hover:bg-gray-100"
             >
                 Batal
             </button>

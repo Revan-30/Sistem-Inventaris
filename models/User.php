@@ -3,11 +3,14 @@ class User {
     private $conn;
     private $table = 'users';
 
+    // Inisialisasi object dan koneksi yang dibutuhkan.
+    // Fungsi: __construct
     public function __construct($db) {
         $this->conn = $db;
     }
 
     // LOGIN
+    // Fungsi: login
     public function login($username, $password) {
         $query = "SELECT * FROM {$this->table} WHERE username = ?";
         $stmt = $this->conn->prepare($query);
@@ -32,12 +35,14 @@ class User {
     }
 
     // READ
+    // Fungsi: getAll
     public function getAll() {
         $query = "SELECT * FROM {$this->table} ORDER BY id DESC";
         return $this->conn->query($query);
     }
 
     // CREATE
+    // Fungsi: create
     public function create($username, $password, $role) {
         $password = password_hash($password, PASSWORD_DEFAULT);
 
@@ -58,6 +63,7 @@ class User {
     }
 
     // GET BY ID
+    // Fungsi: getById
     public function getById($id) {
         $query = "SELECT * FROM {$this->table} WHERE id = ?";
         $stmt = $this->conn->prepare($query);
@@ -78,6 +84,7 @@ class User {
     }
 
     // UPDATE
+    // Fungsi: update
     public function update($id, $username, $password, $role) {
 
     if ($password !== '') {
@@ -120,6 +127,7 @@ class User {
     }
 
     // DELETE
+    // Fungsi: delete
     public function delete($id) {
         $query = "DELETE FROM {$this->table} WHERE id = ?";
         $stmt = $this->conn->prepare($query);

@@ -7,12 +7,16 @@ class AuthController
     private $userModel;
     private $conn;
 
+    // Inisialisasi object dan koneksi yang dibutuhkan.
+    // Fungsi: __construct
     public function __construct($userModel, $conn)
     {
         $this->userModel = $userModel;
         $this->conn = $conn;
     }
 
+    // Memproses proses login pengguna.
+    // Fungsi: login
     public function login($username, $password)
     {
         $user = $this->userModel->login($username, $password);
@@ -59,6 +63,8 @@ class AuthController
         exit;
     }
 
+    // Memproses proses logout pengguna.
+    // Fungsi: logout
     public function logout()
     {
         // Catat aktivitas sebelum session dihapus

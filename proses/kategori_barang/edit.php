@@ -17,10 +17,28 @@ $activity = new ActivityLog($conn);
 
 
 // Mengambil data kategori barang yang dikirim dari form edit
-$id          = (int) $_POST['id'];
-$kode_kategori = trim($_POST['kode_kategori']);
-$nama_kategori = trim($_POST['nama_kategori']);
+$id          = (int) ($_POST['id'] ?? 0);
+$kode_kategori = trim($_POST['kode_kategori'] ?? '');
+$nama_kategori = trim($_POST['nama_kategori'] ?? '');
 
+// Validasi input wajib
+if ($id <= 0) {
+    setFlash('ID kategori tidak valid.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Kategori_barang/admin/index.php');
+    exit;
+}
+
+if ($kode_kategori === '') {
+    setFlash('Kode kategori wajib diisi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Kategori_barang/admin/index.php');
+    exit;
+}
+
+if ($nama_kategori === '') {
+    setFlash('Nama kategori wajib diisi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Kategori_barang/admin/index.php');
+    exit;
+}
 
 // Mengupdate data kategori barang dan mencatat aktivitas jika update berhasil
 if ($kategori_barang->update($id, $kode_kategori, $nama_kategori)) {
@@ -33,9 +51,13 @@ if ($kategori_barang->update($id, $kode_kategori, $nama_kategori)) {
         $_SERVER['REMOTE_ADDR'],
         $_SERVER['HTTP_USER_AGENT']
     );
+
+    setFlash('data kategori barang berhasil diedit.', 'success');
+
+} else {
+
+    setFlash('Gagal mengedit data kategori barang.', 'error');
 }
 
-
-// Mengembalikan user ke halaman Data Kategori Barang setelah proses selesai
 header('Location: ' . BASE_URL . 'views/data/Kategori_barang/admin/index.php');
 exit;

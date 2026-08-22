@@ -3,17 +3,21 @@ class KategoriBarang {
     private $conn;
     private $table = 'kategori_barang';
 
+    // Inisialisasi object dan koneksi yang dibutuhkan.
+    // Fungsi: __construct
     public function __construct($db) {
         $this->conn = $db;
     }
 
     // READ
+    // Fungsi: getAll
     public function getAll() {
         $query = "SELECT * FROM {$this->table} ORDER BY id DESC";
         return $this->conn->query($query);
     }
 
     // CREATE
+    // Fungsi: create
     public function create($kode_kategori, $nama_kategori) {
         $query = "INSERT INTO {$this->table} (kode_kategori, nama_kategori) VALUES (?, ?)";
 
@@ -32,6 +36,7 @@ class KategoriBarang {
     }
 
     // GET BY ID
+    // Fungsi: getById
     public function getById($id) {
         $query = "SELECT * FROM {$this->table} WHERE id = ?";
 
@@ -53,6 +58,7 @@ class KategoriBarang {
     }
 
     // UPDATE
+    // Fungsi: update
     public function update($id, $kode_kategori, $nama_kategori) {
         $query = "UPDATE {$this->table} SET kode_kategori = ?, nama_kategori = ? WHERE id = ?";
 
@@ -70,6 +76,7 @@ class KategoriBarang {
     }
 
     // DELETE
+    // Fungsi: delete
     public function delete($id) {
         $query = "DELETE FROM {$this->table} WHERE id = ?";
 

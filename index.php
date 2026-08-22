@@ -21,14 +21,18 @@ $flash = getFlash();
 
     <div class="flex min-h-screen items-center justify-center p-4">
 
-        <div class="grid w-full max-w-5xl overflow-hidden rounded-3xl bg-white shadow-xl lg:grid-cols-2">
+        <div class="
+            grid w-full max-w-5xl overflow-hidden rounded-3xl bg-white shadow-xl
+            lg:grid-cols-2">
 
 
             <!-- ================================================= -->
             <!-- LEFT : SYSTEM INFORMATION -->
             <!-- ================================================= -->
 
-            <div class="relative hidden overflow-hidden bg-blue-600 p-10 lg:flex lg:flex-col lg:justify-between">
+            <div class="
+                relative hidden overflow-hidden bg-blue-600 p-10 lg:flex lg:flex-col
+                lg:justify-between">
 
                 <!-- Decorative Background -->
                 <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/10"></div>
@@ -41,7 +45,9 @@ $flash = getFlash();
                     <div class="flex items-center gap-3">
 
                         <!-- Logo -->
-                        <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-white text-blue-600 shadow-sm">
+                        <div class="
+                            flex h-11 w-11 items-center justify-center rounded-xl bg-white
+                            text-blue-600 shadow-sm">
 
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -121,7 +127,9 @@ $flash = getFlash();
                     <!-- MOBILE BRAND -->
                     <div class="mb-8 flex items-center justify-center gap-3 lg:hidden">
 
-                        <div class="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white shadow-sm">
+                        <div class="
+                            flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600
+                            text-white shadow-sm">
 
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -198,7 +206,9 @@ $flash = getFlash();
 
                             <div class="relative">
 
-                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
+                                <div class="
+                                    pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4
+                                    text-gray-400">
 
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -222,7 +232,10 @@ $flash = getFlash();
                                     name="username"
                                     autocomplete="username"
                                     placeholder="Masukkan username"
-                                    class="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-11 pr-4 text-sm text-gray-700 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                                    class="
+                                        w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-11 pr-4
+                                        text-sm text-gray-700 outline-none transition focus:border-blue-500
+                                        focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                                     required
                                 >
 
@@ -240,7 +253,9 @@ $flash = getFlash();
 
                             <div class="relative">
 
-                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400">
+                                <div class="
+                                    pointer-events-none absolute inset-y-0 left-0 flex items-center pl-4
+                                    text-gray-400">
 
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -264,7 +279,10 @@ $flash = getFlash();
                                     name="password"
                                     autocomplete="current-password"
                                     placeholder="Masukkan password"
-                                    class="w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-11 pr-4 text-sm text-gray-700 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10"
+                                    class="
+                                        w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-11 pr-4
+                                        text-sm text-gray-700 outline-none transition focus:border-blue-500
+                                        focus:bg-white focus:ring-4 focus:ring-blue-500/10"
                                     required
                                 >
 
@@ -276,7 +294,10 @@ $flash = getFlash();
                         <!-- LOGIN BUTTON -->
                         <button
                             type="submit"
-                            class="flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:bg-blue-700 hover:shadow-md active:scale-[0.99]"
+                            class="
+                                flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600
+                                py-3 text-sm font-semibold text-white shadow-sm transition-all
+                                duration-200 hover:bg-blue-700 hover:shadow-md active:scale-[0.99]"
                         >
 
                             <span>

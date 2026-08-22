@@ -41,9 +41,13 @@ if ($dataLokasi) {
             $_SERVER['HTTP_USER_AGENT']
         );
     }
+    
+    setFlash('Data loaksi berhasil dihapus.', 'success');
+
+} else {
+
+    setFlash('Gagal menghapus data lokasi.', 'error');
 }
 
-
-// Mengembalikan user ke halaman Data Lokasi setelah proses selesai
 header('Location: ' . BASE_URL . 'views/data/Lokasi/admin/index.php');
 exit;

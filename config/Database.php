@@ -8,6 +8,8 @@ class Database {
 
     public $conn;
 
+    // Membuat dan mengembalikan koneksi database.
+    // Fungsi: connect
     public function connect(){
         $this->conn = new mysqli(
             $this->host,

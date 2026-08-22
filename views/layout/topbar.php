@@ -34,7 +34,9 @@
             <button
                 type="button"
                 @click="profileOpen = !profileOpen"
-                class="group flex items-center gap-3 rounded-xl px-2 py-1.5 transition hover:bg-gray-50"
+                class="
+                    group flex items-center gap-3 rounded-xl px-2 py-1.5 transition
+                    hover:bg-gray-50"
             >
 
                 <!-- Divider -->
@@ -51,7 +53,10 @@
                 </div>
 
                 <!-- Avatar -->
-                <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-sm font-bold text-white shadow-sm transition group-hover:bg-blue-700 group-hover:shadow-md">
+                <div class="
+                    flex h-10 w-10 shrink-0 items-center justify-center rounded-xl
+                    bg-blue-600 text-sm font-bold text-white shadow-sm transition
+                    group-hover:bg-blue-700 group-hover:shadow-md">
                     <?= strtoupper(substr($_SESSION['username'] ?? 'U', 0, 1)) ?>
                 </div>
 
@@ -65,7 +70,9 @@
             <div
                 x-show="profileOpen"
                 x-transition
-                class="absolute right-0 top-full z-50 mt-3 w-64 overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-lg"
+                class="
+                    absolute right-0 top-full z-50 mt-3 w-64 overflow-hidden rounded-2xl
+                    border border-gray-200 bg-white shadow-lg"
             >
 
                 <!-- PROFILE HEADER -->
@@ -73,7 +80,9 @@
                     <div class="flex items-center gap-3">
 
                         <!-- Avatar -->
-                        <div class="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-blue-600 text-sm font-bold text-white shadow-sm">
+                        <div class="
+                            flex h-11 w-11 shrink-0 items-center justify-center rounded-xl
+                            bg-blue-600 text-sm font-bold text-white shadow-sm">
                             <?= strtoupper(substr($_SESSION['username'] ?? 'U', 0, 1)) ?>
                         </div>
 
@@ -99,10 +108,16 @@
                     <button
                         type="button"
                         onclick="openProfileModal()"
-                        class="group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 transition hover:bg-blue-50 hover:text-blue-600"
+                        class="
+                            group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm
+                            font-medium text-gray-600 transition hover:bg-blue-50
+                            hover:text-blue-600"
                     >
 
-                        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-blue-100 group-hover:text-blue-600">
+                        <span class="
+                            flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100
+                            text-gray-500 transition group-hover:bg-blue-100
+                            group-hover:text-blue-600">
 
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -130,10 +145,16 @@
                     <button
                         type="button"
                         onclick="openSettingsModal()"
-                        class="group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 transition hover:bg-blue-50 hover:text-blue-600"
+                        class="
+                            group flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm
+                            font-medium text-gray-600 transition hover:bg-blue-50
+                            hover:text-blue-600"
                     >
 
-                        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-blue-100 group-hover:text-blue-600">
+                        <span class="
+                            flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100
+                            text-gray-500 transition group-hover:bg-blue-100
+                            group-hover:text-blue-600">
 
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -164,10 +185,16 @@
 
                     <a
                         href="<?= BASE_URL ?>proses/logout/logout.php"
-                        class="group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-gray-600 transition hover:bg-red-50 hover:text-red-600"
+                        class="
+                            group flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm
+                            font-medium text-gray-600 transition hover:bg-red-50
+                            hover:text-red-600"
                     >
 
-                        <span class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition group-hover:bg-red-100 group-hover:text-red-600">
+                        <span class="
+                            flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100
+                            text-gray-500 transition group-hover:bg-red-100
+                            group-hover:text-red-600">
 
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

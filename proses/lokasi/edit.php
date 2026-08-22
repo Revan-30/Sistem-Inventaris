@@ -17,11 +17,31 @@ $activity = new ActivityLog($conn);
 
 
 // Mengambil data lokasi yang dikirim dari form edit
-$id          = (int) $_POST['id'];
-$kode_lokasi = trim($_POST['kode_lokasi']);
-$nama_lokasi = trim($_POST['nama_lokasi']);
-$keterangan  = trim($_POST['keterangan']);
+$id          = (int) ($_POST['id'] ?? 0);
+$kode_lokasi = trim($_POST['kode_lokasi'] ?? '');
+$nama_lokasi = trim($_POST['nama_lokasi'] ?? '');
+$keterangan  = trim($_POST['keterangan'] ?? '');
 
+// Validasi input wajib
+if ($id <= 0) {
+    setFlash('ID lokasi tidak valid.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Lokasi/admin/index.php');
+    exit;
+}
+
+if ($kode_lokasi === '') {
+    setFlash('Kode lokasi wajib diisi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Lokasi/admin/index.php');
+    exit;
+}
+
+if ($nama_lokasi === '') {
+    setFlash('Nama lokasi wajib diisi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Lokasi/admin/index.php');
+    exit;
+}
+
+// Keterangan bersifat opsional.
 
 // Mengupdate data lokasi dan mencatat aktivitas jika update berhasil
 if ($lokasi->update($id, $kode_lokasi, $nama_lokasi, $keterangan)) {
@@ -34,9 +54,13 @@ if ($lokasi->update($id, $kode_lokasi, $nama_lokasi, $keterangan)) {
         $_SERVER['REMOTE_ADDR'],
         $_SERVER['HTTP_USER_AGENT']
     );
+    
+    setFlash('Data lokasi berhasil diedit.', 'success');
+
+} else {
+
+    setFlash('Gagal mengedit data lokasi.', 'error');
 }
 
-
-// Mengembalikan user ke halaman Data Lokasi setelah proses selesai
 header('Location: ' . BASE_URL . 'views/data/Lokasi/admin/index.php');
 exit;

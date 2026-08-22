@@ -3,17 +3,21 @@ class Lokasi {
     private $conn;
     private $table = 'lokasi';
 
+    // Inisialisasi object dan koneksi yang dibutuhkan.
+    // Fungsi: __construct
     public function __construct($db) {
         $this->conn = $db;
     }
 
     // READ
+    // Fungsi: getAll
     public function getAll() {
         $query = "SELECT * FROM {$this->table} ORDER BY id DESC";
         return $this->conn->query($query);
     }
 
     // CREATE
+    // Fungsi: create
     public function create($kode_lokasi, $nama_lokasi, $keterangan) {
         $query = "INSERT INTO {$this->table} (kode_lokasi, nama_lokasi, keterangan) VALUES (?, ?, ?)";
 
@@ -32,6 +36,7 @@ class Lokasi {
     }
 
     // GET BY ID
+    // Fungsi: getById
     public function getById($id) {
         $query = "SELECT * FROM {$this->table} WHERE id = ?";
 
@@ -53,6 +58,7 @@ class Lokasi {
     }
 
     // UPDATE
+    // Fungsi: update
     public function update($id, $kode_lokasi, $nama_lokasi, $keterangan) {
         $query = "UPDATE {$this->table} SET kode_lokasi = ?, nama_lokasi = ?, keterangan = ? WHERE id = ?";
 
@@ -70,6 +76,7 @@ class Lokasi {
     }
 
     // DELETE
+    // Fungsi: delete
     public function delete($id) {
         $query = "DELETE FROM {$this->table} WHERE id = ?";
 

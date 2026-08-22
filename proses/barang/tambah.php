@@ -16,13 +16,44 @@ $barang = new Barang($conn);
 $activity = new ActivityLog($conn);
 
 // Mengambil data barang yang dikirim dari form
-$kode_barang = trim($_POST['kode_barang']);
-$nama_barang = trim($_POST['nama_barang']);
-$kategori_id = (int) $_POST['kategori_id'];
-$lokasi_id   = (int) $_POST['lokasi_id'];
-$stok        = (int) $_POST['stok'];
-$kondisi     = trim($_POST['kondisi']);
+$kode_barang = trim($_POST['kode_barang'] ?? '');
+$nama_barang = trim($_POST['nama_barang'] ?? '');
+$kategori_id = (int) ($_POST['kategori_id'] ?? 0);
+$lokasi_id   = (int) ($_POST['lokasi_id'] ?? 0);
+$stok        = (int) ($_POST['stok'] ?? 0);
+$kondisi     = trim($_POST['kondisi'] ?? '');
 $created_by  = $_SESSION['id'];
+
+// Validasi input wajib
+if ($kode_barang === '') {
+    setFlash('Kode barang wajib diisi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
+}
+
+if ($nama_barang === '') {
+    setFlash('Nama barang wajib diisi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
+}
+
+if ($kategori_id <= 0) {
+    setFlash('Kategori barang wajib dipilih.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
+}
+
+if ($lokasi_id <= 0) {
+    setFlash('Lokasi barang wajib dipilih.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
+}
+
+if ($kondisi === '') {
+    setFlash('Kondisi barang wajib dipilih.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
+}
 
 // Validasi stok tidak boleh negatif
 if ($stok < 0) {
@@ -99,8 +130,13 @@ if ($barang->create(
         $_SERVER['REMOTE_ADDR'],
         $_SERVER['HTTP_USER_AGENT']
     );
+    
+    setFlash('Data barang berhasil ditambahkan.', 'success');
+
+} else {
+
+    setFlash('Gagal menambahkan data barang.', 'error');
 }
 
-// Mengembalikan user ke halaman Data Barang setelah proses selesai
 header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
 exit;

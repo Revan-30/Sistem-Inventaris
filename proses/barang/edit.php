@@ -16,13 +16,50 @@ $barang = new Barang($conn);
 $activity = new ActivityLog($conn);
 
 // Mengambil data barang yang dikirim dari form edit
-$id          = (int) $_POST['id'];
-$kode_barang = trim($_POST['kode_barang']);
-$nama_barang = trim($_POST['nama_barang']);
-$kategori_id = (int) $_POST['kategori_id'];
-$lokasi_id   = (int) $_POST['lokasi_id'];
-$stok        = (int) $_POST['stok'];
-$kondisi     = trim($_POST['kondisi']);
+$id          = (int) ($_POST['id'] ?? 0);
+$kode_barang = trim($_POST['kode_barang'] ?? '');
+$nama_barang = trim($_POST['nama_barang'] ?? '');
+$kategori_id = (int) ($_POST['kategori_id'] ?? 0);
+$lokasi_id   = (int) ($_POST['lokasi_id'] ?? 0);
+$stok        = (int) ($_POST['stok'] ?? 0);
+$kondisi     = trim($_POST['kondisi'] ?? '');
+
+// Validasi input wajib
+if ($id <= 0) {
+    setFlash('ID barang tidak valid.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
+}
+
+if ($kode_barang === '') {
+    setFlash('Kode barang wajib diisi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
+}
+
+if ($nama_barang === '') {
+    setFlash('Nama barang wajib diisi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
+}
+
+if ($kategori_id <= 0) {
+    setFlash('Kategori barang wajib dipilih.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
+}
+
+if ($lokasi_id <= 0) {
+    setFlash('Lokasi barang wajib dipilih.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
+}
+
+if ($kondisi === '') {
+    setFlash('Kondisi barang wajib dipilih.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
+}
 
 // Validasi stok
 if ($stok < 0) {
@@ -112,8 +149,13 @@ if ($barang->update(
         $_SERVER['REMOTE_ADDR'],
         $_SERVER['HTTP_USER_AGENT']
     );
+    
+    setFlash('Data barang berhasil diedit.', 'success');
+
+} else {
+
+    setFlash('Gagal mengedit data barang.', 'error');
 }
 
-// Redirect
 header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
 exit;

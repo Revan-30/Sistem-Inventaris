@@ -45,7 +45,9 @@ $flash = getFlash();
             <!-- Home -->
             <li>
                 <a href="index.php"
-                   class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-blue-600">
+                   class="
+                       flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium
+                       text-gray-700 transition hover:bg-gray-100 hover:text-blue-600">
 
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -60,7 +62,10 @@ $flash = getFlash();
             <li>
                 <details class="group">
 
-                    <summary class="flex cursor-pointer items-center justify-between rounded-lg px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-blue-600 list-none">
+                    <summary class="
+                        flex cursor-pointer items-center justify-between rounded-lg px-3 py-2
+                        text-sm font-medium text-gray-700 transition hover:bg-gray-100
+                        hover:text-blue-600 list-none">
 
                         <div class="flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -88,7 +93,9 @@ $flash = getFlash();
                         <!-- Barang -->
                         <li>
                             <a href="<?= BASE_URL ?>views/data/Barang/user/index.php"
-                               class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-blue-600">
+                               class="
+                                   flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium
+                                   text-gray-600 transition hover:bg-gray-100 hover:text-blue-600">
 
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -102,7 +109,9 @@ $flash = getFlash();
                         <!-- Kategori Barang -->
                         <li>
                             <a href="<?= BASE_URL ?>views/data/Kategori/index.php"
-                               class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-blue-600">
+                               class="
+                                   flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium
+                                   text-gray-600 transition hover:bg-gray-100 hover:text-blue-600">
 
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -116,7 +125,9 @@ $flash = getFlash();
                         <!-- Lokasi -->
                         <li>
                             <a href="<?= BASE_URL ?>views/data/Lokasi/index.php"
-                               class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-gray-100 hover:text-blue-600">
+                               class="
+                                   flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium
+                                   text-gray-600 transition hover:bg-gray-100 hover:text-blue-600">
 
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -139,7 +150,9 @@ $flash = getFlash();
     <!-- Logout -->
     <div class="p-4 border-t border-gray-200 bg-white mt-auto">
         <a href="<?= BASE_URL ?>proses/logout/logout.php"
-           class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-100 hover:text-red-600">
+           class="
+               flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium
+               text-gray-700 transition hover:bg-gray-100 hover:text-red-600">
 
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round"

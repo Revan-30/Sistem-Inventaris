@@ -10,6 +10,7 @@ if (session_status() === PHP_SESSION_NONE) {
 define('BASE_URL', '/');
 
 // FLASH MESSAGE
+// Fungsi: setFlash
 function setFlash($pesan, $tipe = 'success') {
     $_SESSION['flash'] = [
         'pesan' => $pesan,
@@ -17,6 +18,8 @@ function setFlash($pesan, $tipe = 'success') {
     ];
 }
 
+// Mengambil data yang dibutuhkan.
+// Fungsi: getFlash
 function getFlash() {
     if (isset($_SESSION['flash'])) {
         $flash = $_SESSION['flash'];
@@ -27,6 +30,7 @@ function getFlash() {
 }
 
 // Middleware Admin
+// Fungsi: authAdmin
 function authAdmin() {
     if (!isset($_SESSION['id']) || ($_SESSION['role'] ?? '') !== 'admin') {
         setFlash('Silakan login sebagai admin', 'error');
@@ -36,6 +40,7 @@ function authAdmin() {
 }
 
 // Middleware User
+// Fungsi: authUser
 function authUser() {
     if (!isset($_SESSION['id']) || ($_SESSION['role'] ?? '') !== 'user') {
         setFlash('Silakan login sebagai user', 'error');

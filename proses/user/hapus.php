@@ -35,6 +35,12 @@ if ($dataUser) {
             $_SERVER['HTTP_USER_AGENT']
         );
     }
+    
+    setFlash('Data user berhasil dihapus.', 'success');
+
+} else {
+
+    setFlash('Gagal menghapus data user.', 'error');
 }
 
 header('Location: ' . BASE_URL . 'views/data/User/index.php');

@@ -17,10 +17,24 @@ $activity         = new ActivityLog($conn);
 
 
 // Mengambil data lokasi yang dikirim dari form
-$kode_lokasi = trim($_POST['kode_lokasi']);
-$nama_lokasi = trim($_POST['nama_lokasi']);
-$keterangan  = trim($_POST['keterangan']);
+$kode_lokasi = trim($_POST['kode_lokasi'] ?? '');
+$nama_lokasi = trim($_POST['nama_lokasi'] ?? '');
+$keterangan  = trim($_POST['keterangan']  ?? '');
 
+// Validasi input wajib
+if ($kode_lokasi === '') {
+    setFlash('Kode lokasi wajib diisi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Lokasi/admin/index.php');
+    exit;
+}
+
+if ($nama_lokasi === '') {
+    setFlash('Nama lokasi wajib diisi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Lokasi/admin/index.php');
+    exit;
+}
+
+// Keterangan bersifat opsional.
 
 // Menyimpan data lokasi ke database
 if ($lokasi->create($kode_lokasi, $nama_lokasi, $keterangan)) {
@@ -33,8 +47,13 @@ if ($lokasi->create($kode_lokasi, $nama_lokasi, $keterangan)) {
         $_SERVER['REMOTE_ADDR'],
         $_SERVER['HTTP_USER_AGENT']
     );
+    
+    setFlash('data lokasi berhasil ditambahkan.', 'success');
+
+} else {
+
+    setFlash('Gagal menambahkan data lokasi.', 'error');
 }
 
-// Mengembalikan user ke halaman Data Lokasi setelah proses selesai
 header('Location: ' . BASE_URL . 'views/data/Lokasi/admin/index.php');
 exit;
