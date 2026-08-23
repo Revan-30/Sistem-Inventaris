@@ -52,7 +52,7 @@ if ($kategori_barang->update($id, $kode_kategori, $nama_kategori)) {
         $_SERVER['HTTP_USER_AGENT']
     );
 
-    setFlash('data kategori barang berhasil diedit.', 'success');
+    setFlash('Data kategori barang berhasil diedit.', 'success');
 
 } else {
 

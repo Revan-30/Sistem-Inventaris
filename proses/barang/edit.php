@@ -81,7 +81,45 @@ $dokumen = $dataLama['dokumen']; // default: pakai dokumen lama
 // =========================
 // PROSES UPLOAD FILE BARU
 // =========================
-if (isset($_FILES['dokumen']) && $_FILES['dokumen']['error'] === UPLOAD_ERR_OK) {
+if (isset($_FILES['dokumen'])) {
+
+    // Notifikasi upload: jika tidak ada dokumen baru, gunakan dokumen lama
+    $uploadError = $_FILES['dokumen']['error'];
+
+    if ($uploadError === UPLOAD_ERR_NO_FILE) {
+
+        // Jika belum memiliki dokumen lama, dokumen wajib diupload
+        if (empty($dataLama['dokumen'])) {
+            setFlash('Dokumen barang wajib diupload.', 'error');
+            header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+            exit;
+        }
+
+    } elseif ($uploadError !== UPLOAD_ERR_OK) {
+
+        switch ($uploadError) {
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                setFlash('Ukuran dokumen terlalu besar. Maksimal 2 MB.', 'error');
+                break;
+            case UPLOAD_ERR_PARTIAL:
+                setFlash('Dokumen hanya terupload sebagian. Silakan coba lagi.', 'error');
+                break;
+            case UPLOAD_ERR_NO_TMP_DIR:
+            case UPLOAD_ERR_CANT_WRITE:
+            case UPLOAD_ERR_EXTENSION:
+                setFlash('Dokumen gagal diupload. Silakan coba lagi.', 'error');
+                break;
+            default:
+                setFlash('Terjadi kesalahan saat mengupload dokumen.', 'error');
+                break;
+        }
+
+        header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+        exit;
+    }
+
+    if ($uploadError === UPLOAD_ERR_OK) {
 
     $allowed = ['pdf', 'jpg', 'jpeg', 'png'];
     $maxSize = 2 * 1024 * 1024; // 2 MB
@@ -113,19 +151,21 @@ if (isset($_FILES['dokumen']) && $_FILES['dokumen']['error'] === UPLOAD_ERR_OK) 
         mkdir($uploadDir, 0777, true);
     }
 
-    // Hapus file lama jika ada
-    if (!empty($dataLama['dokumen']) && file_exists($uploadDir . $dataLama['dokumen'])) {
-        unlink($uploadDir . $dataLama['dokumen']);
-    }
+    // Simpan nama dokumen lama untuk dihapus setelah update berhasil
+    $dokumenLama = $dataLama['dokumen'];
 
     // Nama file baru
-    $dokumen = uniqid('barang_', true) . '.' . $ext;
+    $dokumenBaru = uniqid('barang_', true) . '.' . $ext;
 
-    // Simpan file baru
-    if (!move_uploaded_file($fileTmp, $uploadDir . $dokumen)) {
+    // Simpan file baru terlebih dahulu
+    if (!move_uploaded_file($fileTmp, $uploadDir . $dokumenBaru)) {
         setFlash('Dokumen gagal diupload. Silakan coba lagi.', 'error');
         header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
         exit;
+    }
+
+    // Gunakan dokumen baru untuk proses update database
+    $dokumen = $dokumenBaru;
     }
 }
 
@@ -141,6 +181,15 @@ if ($barang->update(
     $dokumen
 )) {
 
+    // Hapus dokumen lama setelah update database berhasil
+    if (isset($dokumenLama) && !empty($dokumenLama)) {
+        $fileLama = __DIR__ . '/../../uploads/barang/' . $dokumenLama;
+
+        if (file_exists($fileLama)) {
+            unlink($fileLama);
+        }
+    }
+
     // Activity log
     $activity->create(
         $_SESSION['id'],
@@ -153,6 +202,15 @@ if ($barang->update(
     setFlash('Data barang berhasil diedit.', 'success');
 
 } else {
+
+    // Jika update database gagal, hapus file baru agar tidak menjadi file yatim
+    if (isset($dokumenBaru)) {
+        $fileBaru = __DIR__ . '/../../uploads/barang/' . $dokumenBaru;
+
+        if (file_exists($fileBaru)) {
+            unlink($fileBaru);
+        }
+    }
 
     setFlash('Gagal mengedit data barang.', 'error');
 }

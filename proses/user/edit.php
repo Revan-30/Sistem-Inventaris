@@ -38,6 +38,15 @@ if ($role === '') {
     exit;
 }
 
+// Tambahan: Batasi role hanya pada role yang tersedia di sistem
+$allowedRoles = ['admin', 'user'];
+
+if (!in_array($role, $allowedRoles, true)) {
+    setFlash('Role tidak valid.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/User/index.php');
+    exit;
+}
+
 // Password boleh kosong saat edit agar password lama tetap digunakan.
 
 // Update user

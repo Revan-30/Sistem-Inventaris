@@ -1,12 +1,13 @@
 <?php
 
-require_once __DIR__ . '/../../../../config/Database.php';
 require_once __DIR__ . '/../../../../config/Helper.php';
+
+authAdmin();
+
+require_once __DIR__ . '/../../../../config/Database.php';
 require_once __DIR__ . '/../../../../models/Barang.php';
 require_once __DIR__ . '/../../../../models/KategoriBarang.php';
 require_once __DIR__ . '/../../../../models/Lokasi.php';
-
-authAdmin();
 
 $db = new Database();
 $conn = $db->connect();
@@ -242,7 +243,7 @@ $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
               class="space-y-4">
 
             <input type="text" name="kode_barang" placeholder="Kode Barang"
-                   class="w-full rounded-lg border px-3 py-2" required>
+                   class="w-full rounded-lg border px-3 py-2" require>
 
             <input type="text" name="nama_barang" placeholder="Nama Barang"
                    class="w-full rounded-lg border px-3 py-2" required>

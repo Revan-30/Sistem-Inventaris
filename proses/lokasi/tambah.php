@@ -48,7 +48,7 @@ if ($lokasi->create($kode_lokasi, $nama_lokasi, $keterangan)) {
         $_SERVER['HTTP_USER_AGENT']
     );
     
-    setFlash('data lokasi berhasil ditambahkan.', 'success');
+    setFlash('Data lokasi berhasil ditambahkan.', 'success');
 
 } else {
 

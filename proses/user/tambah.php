@@ -37,6 +37,15 @@ if ($role === '') {
     exit;
 }
 
+// Tambahan: Batasi role hanya pada role yang tersedia di sistem
+$allowedRoles = ['admin', 'user'];
+
+if (!in_array($role, $allowedRoles, true)) {
+    setFlash('Role tidak valid.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/User/index.php');
+    exit;
+}
+
 // Simpan user
 if ($user->create($username, $password, $role)) {
 
@@ -56,5 +65,5 @@ if ($user->create($username, $password, $role)) {
     setFlash('Gagal menambahkan data user.', 'error');
 }
 
-header('Location: ' . BASE_URL . 'views/data/User//index.php');
+header('Location: ' . BASE_URL . 'views/data/User/index.php');
 exit;

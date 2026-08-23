@@ -67,7 +67,36 @@ if ($stok < 0) {
 // =========================
 $dokumen = null;
 
-if (isset($_FILES['dokumen']) && $_FILES['dokumen']['error'] === UPLOAD_ERR_OK) {
+if (isset($_FILES['dokumen'])) {
+
+    // Notifikasi upload: dokumen wajib dan error upload PHP ditangani dengan pesan sederhana
+    $uploadError = $_FILES['dokumen']['error'];
+
+    if ($uploadError !== UPLOAD_ERR_OK) {
+        switch ($uploadError) {
+            case UPLOAD_ERR_NO_FILE:
+                setFlash('Dokumen barang wajib diupload.', 'error');
+                break;
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                setFlash('Ukuran dokumen terlalu besar. Maksimal 2 MB.', 'error');
+                break;
+            case UPLOAD_ERR_PARTIAL:
+                setFlash('Dokumen hanya terupload sebagian. Silakan coba lagi.', 'error');
+                break;
+            case UPLOAD_ERR_NO_TMP_DIR:
+            case UPLOAD_ERR_CANT_WRITE:
+            case UPLOAD_ERR_EXTENSION:
+                setFlash('Dokumen gagal diupload. Silakan coba lagi.', 'error');
+                break;
+            default:
+                setFlash('Terjadi kesalahan saat mengupload dokumen.', 'error');
+                break;
+        }
+
+        header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+        exit;
+    }
 
     $allowed = ['pdf', 'jpg', 'jpeg', 'png'];
     $maxSize = 2 * 1024 * 1024; // 2 MB
