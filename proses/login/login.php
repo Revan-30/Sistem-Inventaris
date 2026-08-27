@@ -8,6 +8,13 @@ require_once __DIR__ . '/../../models/Auth.php';
 $database = new Database();
 $conn = $database->connect();
 
+// Tambahan: Pastikan koneksi database berhasil sebelum membuat model.
+if (!$conn) {
+    setFlash('Koneksi ke database gagal. Silakan coba lagi.', 'error');
+    header('Location: ' . BASE_URL . 'index.php');
+    exit;
+}
+
 $username = trim($_POST['username'] ?? '');
 $password = $_POST['password'] ?? '';
 

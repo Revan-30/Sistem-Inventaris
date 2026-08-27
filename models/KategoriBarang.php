@@ -13,7 +13,11 @@ class KategoriBarang {
     // Fungsi: getAll
     public function getAll() {
         $query = "SELECT * FROM {$this->table} ORDER BY id DESC";
-        return $this->conn->query($query);
+        $result = $this->conn->query($query);
+        if ($result === false) {
+            error_log('KategoriBarang - GetAll query failed: ' . $this->conn->error);
+        }
+        return $result;
     }
 
     // CREATE
@@ -24,12 +28,16 @@ class KategoriBarang {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('KategoriBarang - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("ss", $kode_kategori, $nama_kategori);
 
         $success = $stmt->execute();
+        if (!$success) {
+            error_log('KategoriBarang - Create Execute failed: ' . $stmt->error);
+        }
         $stmt->close();
 
         return $success;
@@ -43,11 +51,16 @@ class KategoriBarang {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('KategoriBarang - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("i", $id);
-        $stmt->execute();
+        if (!$stmt->execute()) {
+            error_log('KategoriBarang - GetById Execute failed: ' . $stmt->error);
+            $stmt->close();
+            return false;
+        }
 
         $result = $stmt->get_result();
         $kategori_barang = $result->fetch_assoc();
@@ -65,11 +78,15 @@ class KategoriBarang {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('KategoriBarang - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("ssi", $kode_kategori, $nama_kategori, $id);
         $success = $stmt->execute();
+        if (!$success) {
+            error_log('KategoriBarang - Update Execute failed: ' . $stmt->error);
+        }
         $stmt->close();
 
         return $success;
@@ -83,11 +100,15 @@ class KategoriBarang {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('KategoriBarang - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("i", $id);
         $success = $stmt->execute();
+        if (!$success) {
+            error_log('KategoriBarang - Delete Execute failed: ' . $stmt->error);
+        }
         $stmt->close();
 
         return $success;

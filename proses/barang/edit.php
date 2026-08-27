@@ -12,6 +12,13 @@ authAdmin(); // Memastikan hanya admin yang bisa mengakses halaman ini
 $db = new Database();
 $conn = $db->connect();
 
+// Tambahan: Pastikan koneksi database berhasil sebelum membuat model.
+if (!$conn) {
+    setFlash('Koneksi ke database gagal. Silakan coba lagi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
+}
+
 $barang = new Barang($conn);
 $activity = new ActivityLog($conn);
 
@@ -81,7 +88,16 @@ $dokumen = $dataLama['dokumen']; // default: pakai dokumen lama
 // =========================
 // PROSES UPLOAD FILE BARU
 // =========================
-if (isset($_FILES['dokumen'])) {
+if (!isset($_FILES['dokumen'])) {
+
+    // Jika request tidak membawa field dokumen dan data lama juga kosong, dokumen wajib diupload.
+    if (empty($dataLama['dokumen'])) {
+        setFlash('Dokumen barang wajib diupload.', 'error');
+        header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+        exit;
+    }
+
+} elseif (isset($_FILES['dokumen'])) {
 
     // Notifikasi upload: jika tidak ada dokumen baru, gunakan dokumen lama
     $uploadError = $_FILES['dokumen']['error'];
@@ -148,7 +164,7 @@ if (isset($_FILES['dokumen'])) {
     $uploadDir = __DIR__ . '/../../uploads/barang/';
 
     if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
+        mkdir($uploadDir, 0755, true);
     }
 
     // Simpan nama dokumen lama untuk dihapus setelah update berhasil

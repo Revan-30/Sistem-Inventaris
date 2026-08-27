@@ -13,7 +13,11 @@ class Lokasi {
     // Fungsi: getAll
     public function getAll() {
         $query = "SELECT * FROM {$this->table} ORDER BY id DESC";
-        return $this->conn->query($query);
+        $result = $this->conn->query($query);
+        if ($result === false) {
+            error_log('Lokasi - GetAll query failed: ' . $this->conn->error);
+        }
+        return $result;
     }
 
     // CREATE
@@ -24,12 +28,16 @@ class Lokasi {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('Lokasi - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("sss", $kode_lokasi, $nama_lokasi, $keterangan);
 
         $success = $stmt->execute();
+        if (!$success) {
+            error_log('Lokasi - Create Execute failed: ' . $stmt->error);
+        }
         $stmt->close();
 
         return $success;
@@ -43,11 +51,16 @@ class Lokasi {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('Lokasi - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("i", $id);
-        $stmt->execute();
+        if (!$stmt->execute()) {
+            error_log('Lokasi - GetById Execute failed: ' . $stmt->error);
+            $stmt->close();
+            return false;
+        }
 
         $result = $stmt->get_result();
         $lokasi = $result->fetch_assoc();
@@ -65,11 +78,15 @@ class Lokasi {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('Lokasi - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("sssi", $kode_lokasi, $nama_lokasi, $keterangan, $id);
         $success = $stmt->execute();
+        if (!$success) {
+            error_log('Lokasi - Update Execute failed: ' . $stmt->error);
+        }
         $stmt->close();
 
         return $success;
@@ -83,11 +100,15 @@ class Lokasi {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('Lokasi - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("i", $id);
         $success = $stmt->execute();
+        if (!$success) {
+            error_log('Lokasi - Delete Execute failed: ' . $stmt->error);
+        }
         $stmt->close();
 
         return $success;

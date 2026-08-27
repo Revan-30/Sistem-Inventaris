@@ -10,6 +10,13 @@ authAdmin();
 $database = new Database();
 $conn = $database->connect();
 
+// Tambahan: Pastikan koneksi database berhasil sebelum membuat model.
+if (!$conn) {
+    setFlash('Koneksi ke database gagal. Silakan coba lagi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
+}
+
 $barang = new Barang($conn);
 $activity = new ActivityLog($conn);
 

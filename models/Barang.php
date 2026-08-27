@@ -26,7 +26,11 @@ class Barang {
                        ON barang.created_by = users.id
                   ORDER BY barang.id DESC";
 
-        return $this->conn->query($query);
+        $result = $this->conn->query($query);
+        if ($result === false) {
+            error_log('Barang - GetAll query failed: ' . $this->conn->error);
+        }
+        return $result;
     }
 
     // CREATE
@@ -48,7 +52,8 @@ class Barang {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('Barang - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param(
@@ -64,6 +69,9 @@ class Barang {
         );
 
         $success = $stmt->execute();
+        if (!$success) {
+            error_log('Barang - Create Execute failed: ' . $stmt->error);
+        }
         $stmt->close();
 
         return $success;
@@ -77,11 +85,16 @@ class Barang {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('Barang - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("i", $id);
-        $stmt->execute();
+        if (!$stmt->execute()) {
+            error_log('Barang - GetById Execute failed: ' . $stmt->error);
+            $stmt->close();
+            return false;
+        }
 
         $result = $stmt->get_result();
         $barang = $result->fetch_assoc();
@@ -116,7 +129,8 @@ class Barang {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('Barang - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param(
@@ -132,6 +146,9 @@ class Barang {
         );
 
         $success = $stmt->execute();
+        if (!$success) {
+            error_log('Barang - Update Execute failed: ' . $stmt->error);
+        }
         $stmt->close();
 
         return $success;
@@ -145,12 +162,16 @@ class Barang {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('Barang - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("i", $id);
 
         $success = $stmt->execute();
+        if (!$success) {
+            error_log('Barang - Delete Execute failed: ' . $stmt->error);
+        }
         $stmt->close();
 
         return $success;

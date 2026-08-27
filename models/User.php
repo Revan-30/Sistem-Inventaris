@@ -16,11 +16,16 @@ class User {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('User - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("s", $username);
-        $stmt->execute();
+        if (!$stmt->execute()) {
+            error_log('User - Login Execute failed: ' . $stmt->error);
+            $stmt->close();
+            return false;
+        }
 
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
@@ -38,7 +43,11 @@ class User {
     // Fungsi: getAll
     public function getAll() {
         $query = "SELECT * FROM {$this->table} ORDER BY id DESC";
-        return $this->conn->query($query);
+        $result = $this->conn->query($query);
+        if ($result === false) {
+            error_log('User - GetAll query failed: ' . $this->conn->error);
+        }
+        return $result;
     }
 
     // CREATE
@@ -51,12 +60,16 @@ class User {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('User - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("sss", $username, $password, $role);
 
         $success = $stmt->execute();
+        if (!$success) {
+            error_log('User - Create Execute failed: ' . $stmt->error);
+        }
         $stmt->close();
 
         return $success;
@@ -69,11 +82,16 @@ class User {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('User - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("i", $id);
-        $stmt->execute();
+        if (!$stmt->execute()) {
+            error_log('User - GetById Execute failed: ' . $stmt->error);
+            $stmt->close();
+            return false;
+        }
 
         $result = $stmt->get_result();
         $user = $result->fetch_assoc();
@@ -99,7 +117,8 @@ class User {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('User - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("sssi", $username, $passwordHash, $role, $id);
@@ -114,13 +133,17 @@ class User {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('User - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("ssi", $username, $role, $id);
     }
 
     $success = $stmt->execute();
+    if (!$success) {
+        error_log('User - Update Execute failed: ' . $stmt->error);
+    }
     $stmt->close();
 
     return $success;
@@ -133,12 +156,16 @@ class User {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
-            die("Prepare failed: " . $this->conn->error);
+            error_log('User - Prepare failed: ' . $this->conn->error);
+            return false;
         }
 
         $stmt->bind_param("i", $id);
 
         $success = $stmt->execute();
+        if (!$success) {
+            error_log('User - Delete Execute failed: ' . $stmt->error);
+        }
         $stmt->close();
 
         return $success;

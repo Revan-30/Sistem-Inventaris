@@ -23,6 +23,9 @@ class AuthController
 
         if ($user) {
 
+            // Regenerasi ID session setelah login berhasil untuk mencegah session fixation.
+            session_regenerate_id(true);
+
             // Simpan session
             $_SESSION['id'] = $user['id'];
             $_SESSION['username'] = $user['username'];
@@ -70,22 +73,46 @@ class AuthController
         // Catat aktivitas sebelum session dihapus
         if (isset($_SESSION['id'])) {
 
-            $activity = new ActivityLog($this->conn);
+            // Tambahan: Jika database tidak tersedia, logout tetap dilanjutkan.
+            // Activity log hanya dibuat jika koneksi database masih tersedia.
+            if ($this->conn) {
+                $activity = new ActivityLog($this->conn);
 
-            $activity->create(
-                $_SESSION['id'],
-                $_SESSION['username'],
-                'Logout berhasil',
-                $_SERVER['REMOTE_ADDR'],
-                $_SERVER['HTTP_USER_AGENT']
-            );
+                $activity->create(
+                    $_SESSION['id'],
+                    $_SESSION['username'],
+                    'Logout berhasil',
+                    $_SERVER['REMOTE_ADDR'],
+                    $_SERVER['HTTP_USER_AGENT']
+                );
+            } else {
+                error_log('Logout - Activity log dilewati karena koneksi database gagal.');
+            }
         }
+
+        // Simpan parameter cookie session sebelum session dihancurkan.
+        $cookieParams = session_get_cookie_params();
+        $sessionName = session_name();
 
         $_SESSION = [];
 
+        // Hancurkan session aktif.
         session_destroy();
 
+        // Hapus cookie session lama dari browser.
+        setcookie(
+            $sessionName,
+            '',
+            time() - 42000,
+            $cookieParams['path'],
+            $cookieParams['domain'],
+            $cookieParams['secure'],
+            $cookieParams['httponly']
+        );
+
+        // Buat session baru khusus untuk menyimpan flash message logout.
         session_start();
+        session_regenerate_id(true);
 
         setFlash('Berhasil logout', 'success');
 

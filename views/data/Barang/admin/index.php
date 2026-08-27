@@ -243,7 +243,7 @@ $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
               class="space-y-4">
 
             <input type="text" name="kode_barang" placeholder="Kode Barang"
-                   class="w-full rounded-lg border px-3 py-2" require>
+                   class="w-full rounded-lg border px-3 py-2" required>
 
             <input type="text" name="nama_barang" placeholder="Nama Barang"
                    class="w-full rounded-lg border px-3 py-2" required>
@@ -283,7 +283,7 @@ $data_lokasi = $lokasi->getAll()->fetch_all(MYSQLI_ASSOC);
 
             <input type="file" name="dokumen"
                    accept=".pdf,.jpg,.jpeg,.png"
-                   class="w-full rounded-lg border px-3 py-2">
+                   class="w-full rounded-lg border px-3 py-2" required> 
 
             <p class="mt-1 text-xs text-gray-500">
                 Format: PDF, JPG, JPEG, PNG (maks. 2 MB)

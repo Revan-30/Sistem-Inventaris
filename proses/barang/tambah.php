@@ -12,6 +12,13 @@ authAdmin(); // Memastikan hanya admin yang bisa mengakses halaman ini
 $db = new Database();
 $conn = $db->connect();
 
+// Tambahan: Pastikan koneksi database berhasil sebelum membuat model.
+if (!$conn) {
+    setFlash('Koneksi ke database gagal. Silakan coba lagi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
+}
+
 $barang = new Barang($conn);
 $activity = new ActivityLog($conn);
 
@@ -66,6 +73,13 @@ if ($stok < 0) {
 // PROSES UPLOAD FILE
 // =========================
 $dokumen = null;
+
+// Dokumen wajib dikirim oleh form. Validasi ini juga mencegah bypass dari request langsung.
+if (!isset($_FILES['dokumen'])) {
+    setFlash('Dokumen barang wajib diupload.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Barang/admin/index.php');
+    exit;
+}
 
 if (isset($_FILES['dokumen'])) {
 
@@ -128,7 +142,7 @@ if (isset($_FILES['dokumen'])) {
     $uploadDir = __DIR__ . '/../../uploads/barang/';
 
     if (!is_dir($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
+        mkdir($uploadDir, 0755, true);
     }
 
     // Simpan file
@@ -163,6 +177,16 @@ if ($barang->create(
     setFlash('Data barang berhasil ditambahkan.', 'success');
 
 } else {
+
+    // Hapus file yang sudah terupload jika data database gagal disimpan
+    if (!empty($dokumen)) {
+
+        $filePath = __DIR__ . '/../../uploads/barang/' . $dokumen;
+
+        if (file_exists($filePath)) {
+            unlink($filePath);
+        }
+    }
 
     setFlash('Gagal menambahkan data barang.', 'error');
 }

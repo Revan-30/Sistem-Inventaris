@@ -12,6 +12,13 @@ authAdmin();
 $database = new Database();
 $conn     = $database->connect();
 
+// Tambahan: Pastikan koneksi database berhasil sebelum membuat model.
+if (!$conn) {
+    setFlash('Koneksi ke database gagal. Silakan coba lagi.', 'error');
+    header('Location: ' . BASE_URL . 'views/data/Kategori_barang/admin/index.php');
+    exit;
+}
+
 $kategori_barang = new KategoriBarang($conn);
 $activity         = new ActivityLog($conn);
 

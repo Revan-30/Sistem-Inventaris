@@ -14,7 +14,11 @@ class ActivityLog {
     // Fungsi: getAll
     public function getAll() {
         $query = "SELECT * FROM $this->table ORDER BY created_at DESC";
-        return $this->conn->query($query);
+        $result = $this->conn->query($query);
+        if ($result === false) {
+            error_log('ActivityLog - GetAll query failed: ' . $this->conn->error);
+        }
+        return $result;
     }
 
     // Menambahkan data baru.
@@ -30,6 +34,7 @@ class ActivityLog {
         $stmt = $this->conn->prepare($query);
 
         if (!$stmt) {
+            error_log('ActivityLog - Create Prepare failed: ' . $this->conn->error);
             return false;
         }
 
@@ -43,7 +48,12 @@ class ActivityLog {
             $created_at
         );
 
-        return $stmt->execute();
+        $success = $stmt->execute();
+        if (!$success) {
+            error_log('ActivityLog - Create Execute failed: ' . $stmt->error);
+        }
+        $stmt->close();
+        return $success;
     }
 
     // Mengambil data yang dibutuhkan.
@@ -54,6 +64,10 @@ class ActivityLog {
                      OR aktivitas LIKE '%Logout%'
                   ORDER BY created_at DESC";
 
-        return $this->conn->query($query);
+        $result = $this->conn->query($query);
+        if ($result === false) {
+            error_log('ActivityLog - GetLoginHistory query failed: ' . $this->conn->error);
+        }
+        return $result;
     }
 }
